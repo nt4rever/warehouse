@@ -28,6 +28,8 @@ import SettingTab from './SettingTab';
 // assets
 import avatar1 from 'assets/images/users/avatar-1.png';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { dispatch } from 'store/index';
+import { authActions } from 'store/reducers/auth';
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
@@ -57,7 +59,7 @@ const Profile = () => {
     const theme = useTheme();
 
     const handleLogout = async () => {
-        // logout
+        dispatch(authActions.logout());
     };
 
     const anchorRef = useRef(null);

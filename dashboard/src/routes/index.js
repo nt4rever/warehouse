@@ -1,11 +1,10 @@
+import { useSelector } from 'react-redux';
 import { useRoutes } from 'react-router-dom';
-
-// project import
-import LoginRoutes from './LoginRoutes';
-import MainRoutes from './MainRoutes';
+import AppRoutes from './AppRoutes';
 
 // ==============================|| ROUTING RENDER ||============================== //
 
 export default function ThemeRoutes() {
-    return useRoutes([MainRoutes, LoginRoutes]);
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+    return useRoutes(AppRoutes(isLoggedIn));
 }
