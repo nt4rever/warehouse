@@ -1,9 +1,12 @@
-import express from "express";
-import initAPIRoute from "./route/api";
-import connection from "./configs/connectDB";
+import * as dotenv from "dotenv";
+dotenv.config();
 
-require("dotenv").config();
-var morgan = require("morgan");
+import express from "express";
+import connection from "./configs/connectDB";
+import routes from "./routes";
+import { MESSAGES } from "./utils/messages";
+const morgan = require("morgan");
+const cors = require("cors");
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -12,14 +15,11 @@ app.use(morgan("combined"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
-// init api route
-initAPIRoute(app);
+app.use(routes);
 
-//handle 404 not found
-app.use((req, res) => {
-  return res.status(404).json({ message: "Not found" });
-});
+app.use((req, res) => res.status(404).json({ message: MESSAGES.NOT_FOUND }));
 
 app.listen(port, () => {
   console.log(`Server app listening at http://localhost:${port}`);

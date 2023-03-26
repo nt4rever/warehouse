@@ -28,9 +28,9 @@ import AnimateButton from 'components/@extended/AnimateButton';
 
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
 import { authActions } from 'store/reducers/auth';
-import { dispatch } from 'store/index';
+import { dispatch } from 'store';
+import { authServices } from 'api/auth';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -43,6 +43,17 @@ const AuthLogin = () => {
 
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
+    };
+
+    const handleLogin = async (values) => {
+        try {
+            dispatch(authActions.loading());
+            delete values.submit;
+            const data = await authServices.login(values);
+            dispatch(authActions.loginSuccess(data));
+        } catch (error) {
+            dispatch(authActions.loginFailed());
+        }
     };
 
     return (
@@ -59,7 +70,7 @@ const AuthLogin = () => {
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
-                        dispatch(authActions.loginSuccess({ user: values }));
+                        handleLogin(values);
                         setStatus({ success: false });
                         setSubmitting(false);
                     } catch (err) {
