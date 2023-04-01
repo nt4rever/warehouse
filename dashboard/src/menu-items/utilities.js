@@ -26,6 +26,13 @@ const utilities = {
     type: 'group',
     children: [
         {
+            id: 'util-table',
+            title: 'Table',
+            type: 'item',
+            url: '/table',
+            icon: icons.AppstoreAddOutlined
+        },
+        {
             id: 'util-typography',
             title: 'Typography',
             type: 'item',
