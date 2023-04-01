@@ -1,22 +1,46 @@
-import sql from "mssql";
+import * as dotenv from "dotenv";
+dotenv.config();
 
-console.log("Creating connection pool...");
+import sql from "mssql";
+import assert from "assert";
+
+const { DB_USER, DB_PWD, DB_NAME, DB_URL, DB_INSTANCE, DB_PORT } = process.env;
+assert(DB_USER, "DB_USER configuration is required.");
+assert(DB_PWD, "DB_PWD configuration is required.");
+assert(DB_NAME, "DB_NAME configuration is required.");
+assert(DB_URL, "DB_URL configuration is required.");
+assert(DB_PORT, "DB_URL configuration is required.");
+assert(DB_INSTANCE, "DB_INSTANCE configuration is required.");
 
 const sqlConfig = {
-  user: process.env.DB_USER,
-  password: process.env.DB_PWD,
-  database: process.env.DB_NAME,
-  server: process.env.DB_URL,
+  server: DB_URL,
+  user: DB_USER,
+  password: DB_PWD,
+  database: DB_NAME,
   pool: {
     max: 10,
     min: 0,
     idleTimeoutMillis: 30000,
   },
   options: {
-    encrypt: false, // for azure
-    trustServerCertificate: true, // change to true for local dev / self-signed certs
+    instancename: DB_INSTANCE,
+    enableArithAbort: true,
+    trustConnection: false,
+    trustServerCertificate: true,
   },
+  port: Number(DB_PORT),
 };
 
-const pool = new sql.ConnectionPool(sqlConfig);
-export default pool;
+sql.on("error", (err) => {
+  console.log(err.message);
+});
+
+const poolPromise = new sql.ConnectionPool(sqlConfig)
+  .connect()
+  .then((pool) => {
+    console.log("Connected to MSSQL");
+    return pool;
+  })
+  .catch((err) => console.log("Database Connection Failed! Bad Config: ", err));
+
+export default poolPromise;
