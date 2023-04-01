@@ -3,7 +3,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import { Button, DialogActions, DialogContent, DialogTitle, Dialog as MuiDialog, Slide } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
-    useradddialog: {
+    root: {
         '&>div:nth-child(3)': {
             justifyContent: 'flex-end',
             '&>div': {
@@ -25,16 +25,16 @@ const Dialog = ({ children }) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
-    const handleClosedialog = () => {
+    const handleClose = () => {
         setOpen(false);
     };
 
     return (
-        <MuiDialog open={open} TransitionComponent={Transition} keepMounted onClose={handleClosedialog} className={classes.useradddialog}>
+        <MuiDialog open={open} TransitionComponent={Transition} keepMounted onClose={handleClose} className={classes.root}>
             <DialogTitle></DialogTitle>
             <DialogContent>{children}</DialogContent>
             <DialogActions>
-                <Button variant="text" onClick={handleClosedialog} color="primary">
+                <Button variant="text" onClick={handleClose} color="primary">
                     Close
                 </Button>
                 <Button variant="contained"></Button>
