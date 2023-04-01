@@ -20,6 +20,7 @@ const Typography = Loadable(lazy(() => import('pages/components-overview/Typogra
 const Color = Loadable(lazy(() => import('pages/components-overview/Color')));
 const Shadow = Loadable(lazy(() => import('pages/components-overview/Shadow')));
 const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons')));
+const Table = Loadable(lazy(() => import('pages/dashboard/Table')));
 
 const AppRoutes = (isLoggedIn = false) => [
     {
@@ -80,6 +81,10 @@ const AppRoutes = (isLoggedIn = false) => [
             {
                 path: '*',
                 element: <Navigate to="/" replace />
+            },
+            {
+                path: 'table',
+                element: <Table />
             }
         ]
     }
