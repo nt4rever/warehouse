@@ -7,7 +7,6 @@ import MainLayout from 'layout/MainLayout';
 
 // render - login
 const AuthLogin = Loadable(lazy(() => import('pages/authentication/Login')));
-const AuthRegister = Loadable(lazy(() => import('pages/authentication/Register')));
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -21,6 +20,7 @@ const Color = Loadable(lazy(() => import('pages/components-overview/Color')));
 const Shadow = Loadable(lazy(() => import('pages/components-overview/Shadow')));
 const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons')));
 const Table = Loadable(lazy(() => import('pages/dashboard/Table')));
+const Branch = Loadable(lazy(() => import('pages/branch/index')));
 
 const AppRoutes = (isLoggedIn = false) => [
     {
@@ -48,6 +48,10 @@ const AppRoutes = (isLoggedIn = false) => [
             {
                 path: '/',
                 element: <DashboardDefault />
+            },
+            {
+                path: 'branch',
+                element: <Branch />
             },
             {
                 path: 'color',

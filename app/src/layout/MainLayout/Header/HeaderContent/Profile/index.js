@@ -30,6 +30,7 @@ import avatar1 from 'assets/images/users/avatar-1.png';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { dispatch } from 'store/index';
 import { authActions } from 'store/reducers/auth';
+import { useSelector } from 'react-redux';
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
@@ -57,6 +58,7 @@ function a11yProps(index) {
 
 const Profile = () => {
     const theme = useTheme();
+    const { currentUser } = useSelector((state) => state.auth);
 
     const handleLogout = async () => {
         dispatch(authActions.logout());
@@ -83,6 +85,9 @@ const Profile = () => {
 
     const iconBackColorOpen = 'grey.300';
 
+    const fullName = `${currentUser.FirstName} ${currentUser.LastName}`;
+    const role = currentUser.RoleName;
+
     return (
         <Box sx={{ flexShrink: 0, ml: 0.75 }}>
             <ButtonBase
@@ -100,7 +105,7 @@ const Profile = () => {
             >
                 <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
                     <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} />
-                    <Typography variant="subtitle1">John Doe</Typography>
+                    <Typography variant="subtitle1">{fullName}</Typography>
                 </Stack>
             </ButtonBase>
             <Popper
@@ -143,9 +148,9 @@ const Profile = () => {
                                                     <Stack direction="row" spacing={1.25} alignItems="center">
                                                         <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} />
                                                         <Stack>
-                                                            <Typography variant="h6">John Doe</Typography>
+                                                            <Typography variant="h6">{fullName}</Typography>
                                                             <Typography variant="body2" color="textSecondary">
-                                                                UI/UX Designer
+                                                                {role}
                                                             </Typography>
                                                         </Stack>
                                                     </Stack>

@@ -3,6 +3,7 @@ import { Typography } from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';
+import Branch from 'pages/branch/index';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
