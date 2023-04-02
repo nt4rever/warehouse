@@ -66,13 +66,13 @@ const AuthLogin = () => {
         <>
             <Formik
                 initialValues={{
-                    username: 'admin',
-                    password: '123456',
+                    UserName: 'admin001',
+                    Password: '123456',
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
-                    username: Yup.string().max(255).required('Username is required'),
-                    password: Yup.string().max(255).required('Password is required')
+                    UserName: Yup.string().max(255).required('UserName is required'),
+                    Password: Yup.string().max(255).required('Password is required')
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
@@ -95,17 +95,17 @@ const AuthLogin = () => {
                                     <OutlinedInput
                                         id="username-login"
                                         type="text"
-                                        value={values.username}
-                                        name="username"
+                                        value={values.UserName}
+                                        name="UserName"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         placeholder="Enter your username"
                                         fullWidth
-                                        error={Boolean(touched.username && errors.username)}
+                                        error={Boolean(touched.UserName && errors.UserName)}
                                     />
-                                    {touched.username && errors.username && (
+                                    {touched.UserName && errors.UserName && (
                                         <FormHelperText error id="standard-weight-helper-text-email-login">
-                                            {errors.username}
+                                            {errors.UserName}
                                         </FormHelperText>
                                     )}
                                 </Stack>
@@ -115,10 +115,10 @@ const AuthLogin = () => {
                                     <InputLabel htmlFor="password-login">Password</InputLabel>
                                     <OutlinedInput
                                         fullWidth
-                                        error={Boolean(touched.password && errors.password)}
+                                        error={Boolean(touched.Password && errors.Password)}
                                         id="-password-login"
                                         type={showPassword ? 'text' : 'password'}
-                                        value={values.password}
+                                        value={values.Password}
                                         name="password"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
@@ -137,9 +137,9 @@ const AuthLogin = () => {
                                         }
                                         placeholder="Enter password"
                                     />
-                                    {touched.password && errors.password && (
+                                    {touched.Password && errors.Password && (
                                         <FormHelperText error id="standard-weight-helper-text-password-login">
-                                            {errors.password}
+                                            {errors.Password}
                                         </FormHelperText>
                                     )}
                                 </Stack>

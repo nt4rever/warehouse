@@ -9,8 +9,8 @@ import { ROLES } from "../utils/constant";
 const login = async (req, res) => {
   try {
     // Validate user input
-    const { username, password } = req.body;
-    if (!username || !password)
+    const { UserName, Password } = req.body;
+    if (!UserName || !Password)
       return res.status(400).json({
         message: AUTH_MESSAGES.MISSING_CREDENTIALS,
       });
@@ -19,7 +19,7 @@ const login = async (req, res) => {
     const pool = await poolPromise;
     const { recordset: rows } = await pool
       .request()
-      .input("username", username)
+      .input("UserName", UserName)
       .query(AUTH_QUERY.LOGIN);
 
     if (rows.length === 0)
@@ -29,8 +29,8 @@ const login = async (req, res) => {
 
     const user = rows[0];
 
-    // Validate password and ADMIN roles
-    const verify = await argon.verify(user.Password, password);
+    // Validate Password and ADMIN roles
+    const verify = await argon.verify(user.Password, Password);
     if (!verify || user.RoleID !== ROLES.ADMIN)
       return res.status(401).json({
         message: AUTH_MESSAGES.UNAUTHORIZED,
@@ -39,8 +39,9 @@ const login = async (req, res) => {
     // Create token
     const token = jwt.sign(
       {
-        user_id: user.UserID,
-        username,
+        UserID: user.UserID,
+        UserName,
+        role: user.RoleID,
       },
       "SECRET",
       {
@@ -60,11 +61,11 @@ const login = async (req, res) => {
 
 const getProfile = async (req, res) => {
   try {
-    const { username } = req.user;
+    const { UserName } = req.user;
     const pool = await poolPromise;
     const { recordset: rows } = await pool
       .request()
-      .input("username", username)
+      .input("UserName", UserName)
       .query(AUTH_QUERY.LOGIN);
 
     if (rows.length === 0)
