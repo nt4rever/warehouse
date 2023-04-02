@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [QLVT_TQT]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Database [QLVT_TQT]    Script Date: 4/1/2023 7:56:52 PM ******/
 CREATE DATABASE [QLVT_TQT]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -82,13 +82,13 @@ ALTER DATABASE [QLVT_TQT] SET QUERY_STORE = OFF
 GO
 USE [QLVT_TQT]
 GO
-/****** Object:  Table [dbo].[Branch]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Table [dbo].[Branch]    Script Date: 4/1/2023 7:56:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Branch](
-	[BranchID] [nchar](10) NOT NULL,
+	[BranchID] [nvarchar](10) NOT NULL,
 	[BranchName] [nvarchar](100) NOT NULL,
 	[Address] [nvarchar](255) NOT NULL,
 	[PhoneNumber] [nvarchar](15) NULL,
@@ -102,13 +102,13 @@ CREATE TABLE [dbo].[Branch](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Category]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Table [dbo].[Category]    Script Date: 4/1/2023 7:56:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Category](
-	[CategoryID] [nchar](10) NOT NULL,
+	[CategoryID] [nvarchar](10) NOT NULL,
 	[CategoryName] [nvarchar](100) NOT NULL,
  CONSTRAINT [PK_Category] PRIMARY KEY CLUSTERED 
 (
@@ -120,13 +120,13 @@ CREATE TABLE [dbo].[Category](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Customer]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Table [dbo].[Customer]    Script Date: 4/1/2023 7:56:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Customer](
-	[CustomerID] [nchar](10) NOT NULL,
+	[CustomerID] [nvarchar](10) NOT NULL,
 	[CustomerName] [nvarchar](255) NOT NULL,
 	[Address] [nvarchar](255) NULL,
 	[PhoneNumber] [nvarchar](15) NULL,
@@ -140,15 +140,15 @@ CREATE TABLE [dbo].[Customer](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Employee]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Table [dbo].[Employee]    Script Date: 4/1/2023 7:56:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Employee](
-	[EmployeeID] [nchar](10) NOT NULL,
-	[BranchID] [nchar](10) NOT NULL,
-	[UserID] [nchar](10) NOT NULL,
+	[EmployeeID] [nvarchar](10) NOT NULL,
+	[BranchID] [nvarchar](10) NOT NULL,
+	[UserID] [nvarchar](10) NOT NULL,
  CONSTRAINT [PK_Employee] PRIMARY KEY CLUSTERED 
 (
 	[EmployeeID] ASC
@@ -159,15 +159,15 @@ CREATE TABLE [dbo].[Employee](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Inventory]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Table [dbo].[Inventory]    Script Date: 4/1/2023 7:56:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Inventory](
-	[InventoryID] [nchar](10) NOT NULL,
-	[WarehouseID] [nchar](10) NOT NULL,
-	[MaterialID] [nchar](10) NOT NULL,
+	[InventoryID] [nvarchar](10) NOT NULL,
+	[WarehouseID] [nvarchar](10) NOT NULL,
+	[MaterialID] [nvarchar](10) NOT NULL,
 	[Quantity] [int] NOT NULL,
  CONSTRAINT [PK_Inventory] PRIMARY KEY CLUSTERED 
 (
@@ -175,19 +175,19 @@ CREATE TABLE [dbo].[Inventory](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Material]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Table [dbo].[Material]    Script Date: 4/1/2023 7:56:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Material](
-	[MaterialID] [nchar](10) NOT NULL,
+	[MaterialID] [nvarchar](10) NOT NULL,
 	[MaterialName] [nvarchar](100) NOT NULL,
 	[MaterialCode] [nvarchar](100) NOT NULL,
 	[Image_URL] [nvarchar](255) NULL,
 	[Description] [nvarchar](255) NULL,
-	[CategoryID] [nchar](10) NOT NULL,
-	[UnitID] [nchar](10) NOT NULL,
+	[CategoryID] [nvarchar](10) NOT NULL,
+	[UnitID] [nvarchar](10) NOT NULL,
 	[Price] [money] NOT NULL,
  CONSTRAINT [PK_Material] PRIMARY KEY CLUSTERED 
 (
@@ -195,16 +195,16 @@ CREATE TABLE [dbo].[Material](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Order]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Table [dbo].[Order]    Script Date: 4/1/2023 7:56:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Order](
-	[OrderID] [nchar](10) NOT NULL,
-	[CustomerID] [nchar](10) NOT NULL,
-	[WarehouseID] [nchar](10) NOT NULL,
-	[EmployeeID] [nchar](10) NOT NULL,
+	[OrderID] [nvarchar](10) NOT NULL,
+	[CustomerID] [nvarchar](10) NOT NULL,
+	[WarehouseID] [nvarchar](10) NOT NULL,
+	[EmployeeID] [nvarchar](10) NOT NULL,
 	[OrderDate] [date] NOT NULL,
 	[TotalPrice] [decimal](18, 0) NOT NULL,
  CONSTRAINT [PK_Order] PRIMARY KEY CLUSTERED 
@@ -213,14 +213,14 @@ CREATE TABLE [dbo].[Order](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[OrderDetail]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Table [dbo].[OrderDetail]    Script Date: 4/1/2023 7:56:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[OrderDetail](
-	[OrderID] [nchar](10) NOT NULL,
-	[MaterialID] [nchar](10) NOT NULL,
+	[OrderID] [nvarchar](10) NOT NULL,
+	[MaterialID] [nvarchar](10) NOT NULL,
 	[Quantity] [int] NOT NULL,
 	[Price] [decimal](18, 0) NOT NULL,
  CONSTRAINT [PK_OrderDetail] PRIMARY KEY CLUSTERED 
@@ -230,13 +230,13 @@ CREATE TABLE [dbo].[OrderDetail](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Role]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Table [dbo].[Role]    Script Date: 4/1/2023 7:56:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Role](
-	[RoleID] [nchar](10) NOT NULL,
+	[RoleID] [nvarchar](10) NOT NULL,
 	[RoleName] [nvarchar](100) NOT NULL,
  CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED 
 (
@@ -244,13 +244,13 @@ CREATE TABLE [dbo].[Role](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Supplier]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Table [dbo].[Supplier]    Script Date: 4/1/2023 7:56:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Supplier](
-	[SupplierID] [nchar](10) NOT NULL,
+	[SupplierID] [nvarchar](10) NOT NULL,
 	[SupplierName] [nvarchar](255) NOT NULL,
 	[Address] [nvarchar](255) NULL,
 	[PhoneNumber] [nvarchar](15) NULL,
@@ -264,13 +264,13 @@ CREATE TABLE [dbo].[Supplier](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Unit]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Table [dbo].[Unit]    Script Date: 4/1/2023 7:56:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Unit](
-	[UnitID] [nchar](10) NOT NULL,
+	[UnitID] [nvarchar](10) NOT NULL,
 	[UnitName] [nvarchar](100) NOT NULL,
  CONSTRAINT [PK_Unit] PRIMARY KEY CLUSTERED 
 (
@@ -282,15 +282,15 @@ CREATE TABLE [dbo].[Unit](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 4/1/2023 7:56:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[User](
-	[UserID] [nchar](10) NOT NULL,
-	[UserName] [nvarchar](50) NOT NULL,
-	[Password] [nvarchar](50) NOT NULL,
+	[UserID] [nvarchar](10) NOT NULL,
+	[UserName] [nvarchar](50) UNIQUE NOT NULL,
+	[Password] [varchar](255) NOT NULL,
 	[FirstName] [nvarchar](100) NOT NULL,
 	[LastName] [nvarchar](100) NULL,
 	[Gender] [nvarchar](10) NULL,
@@ -304,14 +304,14 @@ CREATE TABLE [dbo].[User](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserRole]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Table [dbo].[UserRole]    Script Date: 4/1/2023 7:56:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[UserRole](
-	[UserID] [nchar](10) NOT NULL,
-	[RoleID] [nchar](10) NOT NULL,
+	[UserID] [nvarchar](10) NOT NULL,
+	[RoleID] [nvarchar](10) NOT NULL,
  CONSTRAINT [PK_UserRole] PRIMARY KEY CLUSTERED 
 (
 	[UserID] ASC,
@@ -319,15 +319,15 @@ CREATE TABLE [dbo].[UserRole](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Warehouse]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Table [dbo].[Warehouse]    Script Date: 4/1/2023 7:56:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Warehouse](
-	[WarehouseID] [nchar](10) NOT NULL,
+	[WarehouseID] [nvarchar](10) NOT NULL,
 	[WarehouseName] [nvarchar](255) NOT NULL,
-	[BranchID] [nchar](10) NOT NULL,
+	[BranchID] [nvarchar](10) NOT NULL,
 	[Address] [nvarchar](255) NOT NULL,
 	[PhoneNumber] [nvarchar](15) NULL,
  CONSTRAINT [PK_Warehouse] PRIMARY KEY CLUSTERED 
@@ -336,15 +336,15 @@ CREATE TABLE [dbo].[Warehouse](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WareHouseExport]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Table [dbo].[WareHouseExport]    Script Date: 4/1/2023 7:56:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[WareHouseExport](
-	[ExportID] [nchar](10) NOT NULL,
-	[OrderID] [nchar](10) NOT NULL,
-	[EmployeeID] [nchar](10) NOT NULL,
+	[ExportID] [nvarchar](10) NOT NULL,
+	[OrderID] [nvarchar](10) NOT NULL,
+	[EmployeeID] [nvarchar](10) NOT NULL,
 	[ExportDate] [date] NOT NULL,
 	[TotalPrice] [decimal](18, 0) NOT NULL,
  CONSTRAINT [PK_WareHouseExport] PRIMARY KEY CLUSTERED 
@@ -353,14 +353,14 @@ CREATE TABLE [dbo].[WareHouseExport](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WareHouseExportDetail]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Table [dbo].[WareHouseExportDetail]    Script Date: 4/1/2023 7:56:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[WareHouseExportDetail](
-	[ExportID] [nchar](10) NOT NULL,
-	[MaterialID] [nchar](10) NOT NULL,
+	[ExportID] [nvarchar](10) NOT NULL,
+	[MaterialID] [nvarchar](10) NOT NULL,
 	[Quantity] [int] NOT NULL,
 	[Price] [decimal](18, 0) NOT NULL,
  CONSTRAINT [PK_WareHouseExportDetail] PRIMARY KEY CLUSTERED 
@@ -370,15 +370,15 @@ CREATE TABLE [dbo].[WareHouseExportDetail](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WareHouseImport]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Table [dbo].[WareHouseImport]    Script Date: 4/1/2023 7:56:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[WareHouseImport](
-	[ImportID] [nchar](10) NOT NULL,
-	[EmployeeID] [nchar](10) NOT NULL,
-	[SupplierID] [nchar](10) NOT NULL,
+	[ImportID] [nvarchar](10) NOT NULL,
+	[EmployeeID] [nvarchar](10) NOT NULL,
+	[SupplierID] [nvarchar](10) NOT NULL,
 	[ImportDate] [date] NOT NULL,
 	[TotalPrice] [decimal](18, 0) NOT NULL,
  CONSTRAINT [PK_WareHouseImport] PRIMARY KEY CLUSTERED 
@@ -387,14 +387,14 @@ CREATE TABLE [dbo].[WareHouseImport](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WareHouseImportDetail]    Script Date: 4/1/2023 4:30:40 PM ******/
+/****** Object:  Table [dbo].[WareHouseImportDetail]    Script Date: 4/1/2023 7:56:52 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[WareHouseImportDetail](
-	[ImportID] [nchar](10) NOT NULL,
-	[MaterialID] [nchar](10) NOT NULL,
+	[ImportID] [nvarchar](10) NOT NULL,
+	[MaterialID] [nvarchar](10) NOT NULL,
 	[Quantity] [int] NOT NULL,
 	[Price] [decimal](18, 0) NOT NULL,
  CONSTRAINT [PK_WareHouseImportDetail] PRIMARY KEY CLUSTERED 
