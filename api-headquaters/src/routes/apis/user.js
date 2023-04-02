@@ -1,20 +1,11 @@
 import express from "express";
-import auth from "../../middleware/auth";
-import { role } from "../../middleware/role";
 import UserController from "../../controllers/UserController";
-import { ROLES } from "../../utils/constant";
 const router = express.Router();
 
-router.post(
-  "/create",
-  auth,
-  role.check(ROLES.ADMIN),
-  UserController.createUser
-);
-
-router.get("/", auth, role.check(ROLES.ADMIN), UserController.getAll);
-router.get("/:id", auth, role.check(ROLES.ADMIN), UserController.getById);
-router.delete("/:id", auth, role.check(ROLES.ADMIN), UserController.deleteById);
-router.patch("/:id", auth, role.check(ROLES.ADMIN), UserController.updateById);
+router.post("/create", UserController.createUser);
+router.get("/", UserController.getAll);
+router.get("/:id", UserController.getById);
+router.delete("/:id", UserController.deleteById);
+router.patch("/:id", UserController.updateById);
 
 export default router;
