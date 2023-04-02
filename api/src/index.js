@@ -2,7 +2,6 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 import express from "express";
-import connection from "./configs/connectDB";
 import routes from "./routes";
 import { MESSAGES } from "./utils/messages";
 const morgan = require("morgan");

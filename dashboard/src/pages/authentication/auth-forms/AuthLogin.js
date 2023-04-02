@@ -50,7 +50,13 @@ const AuthLogin = () => {
             dispatch(authActions.loading());
             delete values.submit;
             const data = await authServices.login(values);
-            dispatch(authActions.loginSuccess(data));
+            const { Token: token, ...user } = data;
+            dispatch(
+                authActions.loginSuccess({
+                    user,
+                    token
+                })
+            );
         } catch (error) {
             dispatch(authActions.loginFailed());
         }
@@ -60,7 +66,7 @@ const AuthLogin = () => {
         <>
             <Formik
                 initialValues={{
-                    username: 'admin@codedthemes.com',
+                    username: 'admin',
                     password: '123456',
                     submit: null
                 }}
