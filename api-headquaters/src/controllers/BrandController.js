@@ -53,7 +53,7 @@ const destroy = async (req, res) => {
         message: BRANCH_MESSAGES.NOT_FOUND,
       });
 
-    await pool.request().input("BranchID", BranchID).query(BRANCH_QUERY.DELTE);
+    await pool.request().input("BranchID", BranchID).query(BRANCH_QUERY.DELETE);
 
     return res.status(200).json({
       message: BRANCH_MESSAGES.DELETED,
