@@ -3,5 +3,5 @@ export const BRANCH_QUERY = {
   ALL: `SELECT * FROM Branch;`,
   CREATE: `INSERT INTO Branch VALUES(@BranchID, @BranchName, @Address, @PhoneNumber);`,
   UPDATE: `UPDATE Branch SET BranchName = @BranchName, Address = @Address, PhoneNumber = @PhoneNumber WHERE BranchID = @BranchID;`,
-  DELTE: `DELETE FROM Branch WHERE BranchID = @BranchID;`,
+  DELETE: `DELETE FROM Branch WHERE BranchID = @BranchID;`,
 };
