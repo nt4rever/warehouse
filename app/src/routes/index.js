@@ -5,6 +5,6 @@ import AppRoutes from './AppRoutes';
 // ==============================|| ROUTING RENDER ||============================== //
 
 export default function ThemeRoutes() {
-    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-    return useRoutes(AppRoutes(isLoggedIn));
+    const { isLoggedIn, currentUser } = useSelector((state) => state.auth);
+    return useRoutes(AppRoutes(isLoggedIn, currentUser));
 }

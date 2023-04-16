@@ -1,9 +1,9 @@
 import express from "express";
-import BrandController from "../../controllers/BrandController";
+import BranchController from "../../controllers/BranchController";
 
 const router = express.Router();
 
-router.get("/", BrandController.getAll);
-router.patch("/:id", BrandController.update);
+router.get("/", BranchController.getAll);
+router.patch("/:id", BranchController.update);
 
 export default router;

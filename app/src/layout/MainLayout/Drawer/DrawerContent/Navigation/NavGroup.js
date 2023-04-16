@@ -6,10 +6,13 @@ import { Box, List, Typography } from '@mui/material';
 
 // project import
 import NavItem from './NavItem';
+import { ROLES } from 'utils/constant';
 
 // ==============================|| NAVIGATION - LIST GROUP ||============================== //
 
 const NavGroup = ({ item }) => {
+    const { currentUser } = useSelector((state) => state.auth);
+    const addPath = currentUser?.RoleID === ROLES.ADMIN && item.id !== 'authentication' ? '/headquarters' : '';
     const menu = useSelector((state) => state.menu);
     const { drawerOpen } = menu;
 
@@ -22,7 +25,7 @@ const NavGroup = ({ item }) => {
                     </Typography>
                 );
             case 'item':
-                return <NavItem key={menuItem.id} item={menuItem} level={1} />;
+                return <NavItem key={menuItem.id} item={menuItem} level={1} addPath={addPath} />;
             default:
                 return (
                     <Typography key={menuItem.id} variant="h6" color="error" align="center">

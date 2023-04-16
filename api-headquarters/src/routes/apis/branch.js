@@ -1,11 +1,11 @@
 import express from "express";
-import BrandController from "../../controllers/BrandController";
+import BranchController from "../../controllers/BranchController";
 
 const router = express.Router();
 
-router.get("/", BrandController.getAll);
-router.post("/create", BrandController.create);
-router.patch("/:id", BrandController.update);
-router.delete("/:id", BrandController.destroy);
+router.get("/", BranchController.getAll);
+router.post("/create", BranchController.create);
+router.patch("/:id", BranchController.update);
+router.delete("/:id", BranchController.destroy);
 
 export default router;
