@@ -13,15 +13,15 @@ import {
     TableRow
 } from '@mui/material/';
 import { useQuery } from '@tanstack/react-query';
-import { warehouseServices } from 'api/warehouse/index';
-import TablePaginationActions from './../../components/PaginationAction/index';
-import WarehouseEditModal from './edit.modal';
-import WarehouseNewModal from './new.modal';
+import { supplierServices } from 'api/supplier/index';
+import TablePaginationActions from '../../components/PaginationAction/index';
+import SupplierEditModal from './edit.modal';
+import SupplierNewModal from './new.modal';
 
-const Warehouse = () => {
+const Supplier = () => {
     const { data } = useQuery({
-        queryKey: ['warehouses'],
-        queryFn: warehouseServices.getAll
+        queryKey: ['suppliers'],
+        queryFn: supplierServices.getAll
     });
 
     const [page, setPage] = React.useState(0);
@@ -57,8 +57,8 @@ const Warehouse = () => {
 
     return (
         <React.Fragment>
-            <WarehouseEditModal open={modalEdit.open} data={modalEdit.data} onClose={handleCloseModal} />
-            <WarehouseNewModal open={modalNew} onClose={() => setModalNew(false)} />
+            <SupplierEditModal open={modalEdit.open} data={modalEdit.data} onClose={handleCloseModal} />
+            <SupplierNewModal open={modalNew} onClose={() => setModalNew(false)} />
             <Button variant="contained" color="primary" onClick={() => setModalNew(true)}>
                 Create
             </Button>
@@ -66,18 +66,18 @@ const Warehouse = () => {
                 <Table sx={{ minWidth: 500 }}>
                     <TableHead>
                         <TableRow>
-                            <TableCell align="left">Warehouse ID</TableCell>
-                            <TableCell align="left">Warehouse Name</TableCell>
+                            <TableCell align="left">Supplier ID</TableCell>
+                            <TableCell align="left">Supplier Name</TableCell>
                             <TableCell align="left">PhoneNumber</TableCell>
-                            <TableCell align="left">Warehouse Address</TableCell>
+                            <TableCell align="left">Supplier Address</TableCell>
                             <TableCell align="left">Action</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {(rowsPerPage > 0 ? data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data)?.map((row, index) => (
                             <TableRow key={index}>
-                                <TableCell align="left">{row.WarehouseID}</TableCell>
-                                <TableCell align="left">{row.WarehouseName}</TableCell>
+                                <TableCell align="left">{row.SupplierID}</TableCell>
+                                <TableCell align="left">{row.SupplierName}</TableCell>
                                 <TableCell align="left">{row.PhoneNumber}</TableCell>
                                 <TableCell align="left">{row.Address}</TableCell>
                                 <TableCell align="left">
@@ -115,4 +115,4 @@ const Warehouse = () => {
     );
 };
 
-export default Warehouse;
+export default Supplier;

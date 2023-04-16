@@ -59,14 +59,7 @@ const UserEditModal = (props) => {
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Typography variant="subtitle1">User ID</Typography>
-                        <TextField
-                            fullWidth
-                            name="UserID"
-                            onChange={handleChange}
-                            required
-                            value={modalData.UserID || ''}
-                            variant="outlined"
-                        />
+                        <TextField fullWidth name="UserID" disabled required value={modalData.UserID || ''} variant="outlined" />
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="subtitle1">User Name</Typography>

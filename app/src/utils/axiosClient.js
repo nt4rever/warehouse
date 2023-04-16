@@ -2,7 +2,8 @@ import axios from 'axios';
 import { getLocalStorage, KEY_LOCAL_STORAGE } from './storage';
 
 const axiosClient = axios.create({
-    baseURL: process.env.REACT_APP_API_URI,
+    // baseURL: process.env.REACT_APP_API_URI,
+    baseURL: 'http://10.10.10.86:4001/api',
     timeout: 30000
 });
 

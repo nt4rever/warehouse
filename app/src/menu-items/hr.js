@@ -10,8 +10,8 @@ const icons = {
 // ==============================|| MENU ITEMS - SAMPLE PAGE & DOCUMENTATION ||============================== //
 
 const humanResource = {
-    id: 'facilities',
-    title: 'Facilities',
+    id: 'humanResource',
+    title: 'Human Resource',
     type: 'group',
     children: [
         {
