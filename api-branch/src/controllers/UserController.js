@@ -2,7 +2,6 @@ import poolPromise from "../configs/connectDB";
 import * as argon from "argon2";
 import { AUTH_MESSAGES, MESSAGES, USER_MESSAGES } from "../utils/messages";
 import { USER_QUERY } from "../queries/userQuery";
-import { ROLES } from "../utils/constant";
 
 const getAll = async (req, res) => {
   try {
