@@ -2,7 +2,6 @@ import React from 'react';
 import {
     Button,
     Paper,
-    Stack,
     Table,
     TableBody,
     TableCell,
@@ -12,25 +11,21 @@ import {
     TablePagination,
     TableRow
 } from '@mui/material/';
-import { dispatch } from 'store/index';
-import { snackbarActions } from 'store/reducers/snackbar';
 import { useQuery } from '@tanstack/react-query';
-import { branchServices } from 'api/branch/index';
 import TablePaginationActions from './../../components/PaginationAction/index';
-import BranchModal from './edit.modal';
+import EmployeeNewModal from './new.modal';
+import { employeeServices } from 'api/employee/index';
 
-const Branch = () => {
+const Employee = () => {
     const { data } = useQuery({
-        queryKey: ['branches'],
-        queryFn: branchServices.getAll
+        queryKey: ['employees'],
+        queryFn: employeeServices.getAll
     });
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    const [modal, setModal] = React.useState({
-        open: false,
-        data: {}
-    });
+
+    const [modalNew, setModalNew] = React.useState(false);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -41,48 +36,31 @@ const Branch = () => {
         setPage(0);
     };
 
-    const handleClickDetail = (row) => {
-        setModal({
-            open: true,
-            data: row
-        });
-    };
-
-    const handleCloseModal = () => {
-        setModal({
-            open: false,
-            data: {}
-        });
-    };
-
     return (
         <React.Fragment>
-            <BranchModal open={modal.open} data={modal.data} handleClose={handleCloseModal} />
+            <EmployeeNewModal open={modalNew} onClose={() => setModalNew(false)} />
+            <Button variant="contained" color="primary" onClick={() => setModalNew(true)}>
+                Create
+            </Button>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 500 }}>
                     <TableHead>
                         <TableRow>
-                            <TableCell align="left">Branch ID</TableCell>
                             <TableCell align="left">Branch Name</TableCell>
-                            <TableCell align="left">PhoneNumber</TableCell>
-                            <TableCell align="left">Branch Address</TableCell>
-                            <TableCell align="left">Action</TableCell>
+                            <TableCell align="left">Employee ID</TableCell>
+                            <TableCell align="left">User ID</TableCell>
+                            <TableCell align="left">UserName</TableCell>
+                            <TableCell align="left">FullName</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {(rowsPerPage > 0 ? data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data)?.map((row) => (
                             <TableRow key={row.name}>
-                                <TableCell align="left">{row.BranchID}</TableCell>
                                 <TableCell align="left">{row.BranchName}</TableCell>
-                                <TableCell align="left">{row.PhoneNumber}</TableCell>
-                                <TableCell align="left">{row.Address}</TableCell>
-                                <TableCell align="left">
-                                    <Stack direction="row" spacing={2}>
-                                        <Button variant="contained" color="primary" onClick={(e) => handleClickDetail(row)}>
-                                            Edit
-                                        </Button>
-                                    </Stack>
-                                </TableCell>
+                                <TableCell align="left">{row.EmployeeID}</TableCell>
+                                <TableCell align="left">{row.UserID}</TableCell>
+                                <TableCell align="left">{row.UserName}</TableCell>
+                                <TableCell align="left">{row.FirstName + ' ' + row.LastName}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
@@ -111,4 +89,4 @@ const Branch = () => {
     );
 };
 
-export default Branch;
+export default Employee;
