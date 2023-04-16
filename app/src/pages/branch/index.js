@@ -58,7 +58,7 @@ const Branch = () => {
     return (
         <React.Fragment>
             <BranchModal open={modal.open} data={modal.data} handleClose={handleCloseModal} />
-            <TableContainer component={Paper}>
+            <TableContainer sx={{ marginTop: 2 }} component={Paper}>
                 <Table sx={{ minWidth: 500 }}>
                     <TableHead>
                         <TableRow>
@@ -70,8 +70,8 @@ const Branch = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {(rowsPerPage > 0 ? data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data)?.map((row) => (
-                            <TableRow key={row.name}>
+                        {(rowsPerPage > 0 ? data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data)?.map((row, index) => (
+                            <TableRow key={index}>
                                 <TableCell align="left">{row.BranchID}</TableCell>
                                 <TableCell align="left">{row.BranchName}</TableCell>
                                 <TableCell align="left">{row.PhoneNumber}</TableCell>

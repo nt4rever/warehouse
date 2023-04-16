@@ -19,10 +19,15 @@ const Typography = Loadable(lazy(() => import('pages/components-overview/Typogra
 const Color = Loadable(lazy(() => import('pages/components-overview/Color')));
 const Shadow = Loadable(lazy(() => import('pages/components-overview/Shadow')));
 const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons')));
-const Branch = Loadable(lazy(() => import('pages/branch/index')));
-const Warehouse = Loadable(lazy(() => import('pages/warehouse/index')));
-const User = Loadable(lazy(() => import('pages/user/index')));
-const Employee = Loadable(lazy(() => import('pages/employee/index')));
+const Branch = Loadable(lazy(() => import('pages/branch')));
+const Warehouse = Loadable(lazy(() => import('pages/warehouse')));
+const User = Loadable(lazy(() => import('pages/user')));
+const Employee = Loadable(lazy(() => import('pages/employee')));
+const Category = Loadable(lazy(() => import('pages/category')));
+const Unit = Loadable(lazy(() => import('pages/unit')));
+const Material = Loadable(lazy(() => import('pages/material')));
+const Customer = Loadable(lazy(() => import('pages/customer')));
+const Supplier = Loadable(lazy(() => import('pages/supplier')));
 
 const AppRoutes = (isLoggedIn = false) => [
     {
@@ -66,6 +71,26 @@ const AppRoutes = (isLoggedIn = false) => [
             {
                 path: 'employee',
                 element: <Employee />
+            },
+            {
+                path: 'category',
+                element: <Category />
+            },
+            {
+                path: 'unit',
+                element: <Unit />
+            },
+            {
+                path: 'material',
+                element: <Material />
+            },
+            {
+                path: 'customer',
+                element: <Customer />
+            },
+            {
+                path: 'supplier',
+                element: <Supplier />
             },
             {
                 path: 'color',

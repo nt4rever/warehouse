@@ -1,32 +1,20 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    Grid,
-    Slide,
-    TextField,
-    Typography
-} from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, TextField, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { branchServices } from 'api/branch/index';
 import { useDispatch } from 'react-redux';
 import { snackbarActions } from 'store/reducers/snackbar';
+import { unitServices } from 'api/unit/index';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const BranchModal = (props) => {
-    const { open, data, handleClose } = props;
+const UnitEditModal = (props) => {
+    const { open, data, onClose } = props;
     const [modalData, setModalData] = React.useState({});
     const queryClient = useQueryClient();
     const dispatch = useDispatch();
-
     const handleChange = (event) => {
         const { name, value } = event.target;
         setModalData((prev) => ({
@@ -36,10 +24,10 @@ const BranchModal = (props) => {
     };
 
     const mutation = useMutation({
-        mutationFn: branchServices.update,
+        mutationFn: unitServices.update,
         onSuccess: (response) => {
             dispatch(snackbarActions.open({ message: response.message, severity: 'success' }));
-            queryClient.invalidateQueries({ queryKey: ['branches'] });
+            queryClient.invalidateQueries({ queryKey: ['units'] });
         },
         onError: (error) => {
             const message = error.response.data.message;
@@ -49,10 +37,15 @@ const BranchModal = (props) => {
 
     const handleSubmit = () => {
         mutation.mutate({
-            id: modalData.BranchID,
+            id: modalData.UnitID,
             payload: modalData
         });
         handleClose();
+    };
+
+    const handleClose = () => {
+        onClose();
+        setModalData({});
     };
 
     React.useEffect(() => {
@@ -61,38 +54,23 @@ const BranchModal = (props) => {
 
     return (
         <Dialog fullWidth={true} maxWidth={'xs'} open={open} onClose={handleClose} TransitionComponent={Transition} keepMounted>
-            <DialogTitle>Edit Branch</DialogTitle>
+            <DialogTitle>Edit Unit</DialogTitle>
             <DialogContent>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <Typography variant="subtitle1">Branch ID</Typography>
-                        <TextField fullWidth name="BranchID" disabled value={modalData.BranchID} required variant="outlined" />
+                        <Typography variant="subtitle1">Unit ID</Typography>
+                        <TextField fullWidth name="UnitID" disabled required value={modalData.UnitID || ''} variant="outlined" />
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="subtitle1">Branch Name</Typography>
+                        <Typography variant="subtitle1">Unit Name</Typography>
                         <TextField
                             fullWidth
-                            name="BranchName"
+                            name="UnitName"
                             onChange={handleChange}
                             required
-                            value={modalData.BranchName}
+                            value={modalData.UnitName || ''}
                             variant="outlined"
                         />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Typography variant="subtitle1">Phone Number</Typography>
-                        <TextField
-                            fullWidth
-                            name="PhoneNumber"
-                            onChange={handleChange}
-                            required
-                            value={modalData.PhoneNumber}
-                            variant="outlined"
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Typography variant="subtitle1">Address</Typography>
-                        <TextField fullWidth name="Address" onChange={handleChange} required value={modalData.Address} variant="outlined" />
                     </Grid>
                 </Grid>
             </DialogContent>
@@ -108,11 +86,10 @@ const BranchModal = (props) => {
     );
 };
 
-export default BranchModal;
+export default UnitEditModal;
 
-BranchModal.propTypes = {
+UnitEditModal.propTypes = {
     open: PropTypes.bool.isRequired,
-    handleClose: PropTypes.func.isRequired,
-    handleChange: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired
 };

@@ -1,25 +1,20 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, MenuItem, Slide, TextField, Typography } from '@mui/material';
-import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, TextField, Typography } from '@mui/material';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { snackbarActions } from 'store/reducers/snackbar';
-import { warehouseServices } from 'api/warehouse/index';
-import { branchServices } from 'api/branch/index';
+import { supplierServices } from 'api/supplier/index';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const WarehouseEditModal = (props) => {
+const SupplierEditModal = (props) => {
     const { open, data, onClose } = props;
     const [modalData, setModalData] = React.useState({});
     const queryClient = useQueryClient();
     const dispatch = useDispatch();
-    const { data: branches } = useQuery({
-        queryKey: ['branches'],
-        queryFn: branchServices.getAll
-    });
     const handleChange = (event) => {
         const { name, value } = event.target;
         setModalData((prev) => ({
@@ -29,10 +24,10 @@ const WarehouseEditModal = (props) => {
     };
 
     const mutation = useMutation({
-        mutationFn: warehouseServices.update,
+        mutationFn: supplierServices.create,
         onSuccess: (response) => {
             dispatch(snackbarActions.open({ message: response.message, severity: 'success' }));
-            queryClient.invalidateQueries({ queryKey: ['warehouses'] });
+            queryClient.invalidateQueries({ queryKey: ['suppliers'] });
         },
         onError: (error) => {
             const message = error.response.data.message;
@@ -42,7 +37,7 @@ const WarehouseEditModal = (props) => {
 
     const handleSubmit = () => {
         mutation.mutate({
-            id: modalData.WarehouseID,
+            id: modalData.SupplierID,
             payload: modalData
         });
         handleClose();
@@ -53,47 +48,32 @@ const WarehouseEditModal = (props) => {
         setModalData({});
     };
 
-    React.useEffect(() => {
-        setModalData(data);
-    }, [data]);
-
     return (
         <Dialog fullWidth={true} maxWidth={'xs'} open={open} onClose={handleClose} TransitionComponent={Transition} keepMounted>
-            <DialogTitle>Edit Warehouse</DialogTitle>
+            <DialogTitle>Create New Supplier</DialogTitle>
             <DialogContent>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <Typography variant="subtitle1">Warehouse ID</Typography>
-                        <TextField fullWidth name="WarehouseID" disabled required value={modalData.WarehouseID || ''} variant="outlined" />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Typography variant="subtitle1">Warehouse Name</Typography>
+                        <Typography variant="subtitle1">Supplier ID</Typography>
                         <TextField
                             fullWidth
-                            name="WarehouseName"
+                            name="SupplierID"
                             onChange={handleChange}
                             required
-                            value={modalData.WarehouseName || ''}
+                            value={modalData.SupplierID || ''}
                             variant="outlined"
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="subtitle1">Branch</Typography>
+                        <Typography variant="subtitle1">Supplier Name</Typography>
                         <TextField
                             fullWidth
-                            select
-                            name="BranchID"
+                            name="SupplierName"
                             onChange={handleChange}
                             required
-                            value={modalData.BranchID || ''}
+                            value={modalData.SupplierName || ''}
                             variant="outlined"
-                        >
-                            {branches?.map((branch) => (
-                                <MenuItem key={branch.BranchID} value={branch.BranchID}>
-                                    {branch.BranchName}
-                                </MenuItem>
-                            ))}
-                        </TextField>
+                        />
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="subtitle1">Phone Number</Typography>
@@ -124,17 +104,16 @@ const WarehouseEditModal = (props) => {
                     Close
                 </Button>
                 <Button variant="contained" color="primary" onClick={handleSubmit}>
-                    Save changes
+                    Create
                 </Button>
             </DialogActions>
         </Dialog>
     );
 };
 
-export default WarehouseEditModal;
+export default SupplierEditModal;
 
-WarehouseEditModal.propTypes = {
+SupplierEditModal.propTypes = {
     open: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
-    data: PropTypes.object.isRequired
+    onClose: PropTypes.func.isRequired
 };

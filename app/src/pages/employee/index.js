@@ -42,7 +42,7 @@ const Employee = () => {
             <Button variant="contained" color="primary" onClick={() => setModalNew(true)}>
                 Create
             </Button>
-            <TableContainer component={Paper}>
+            <TableContainer sx={{ marginTop: 2 }} component={Paper}>
                 <Table sx={{ minWidth: 500 }}>
                     <TableHead>
                         <TableRow>
@@ -54,8 +54,8 @@ const Employee = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {(rowsPerPage > 0 ? data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data)?.map((row) => (
-                            <TableRow key={row.name}>
+                        {(rowsPerPage > 0 ? data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data)?.map((row, index) => (
+                            <TableRow key={index}>
                                 <TableCell align="left">{row.BranchName}</TableCell>
                                 <TableCell align="left">{row.EmployeeID}</TableCell>
                                 <TableCell align="left">{row.UserID}</TableCell>
