@@ -19,8 +19,8 @@ const Typography = Loadable(lazy(() => import('pages/components-overview/Typogra
 const Color = Loadable(lazy(() => import('pages/components-overview/Color')));
 const Shadow = Loadable(lazy(() => import('pages/components-overview/Shadow')));
 const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons')));
-const Table = Loadable(lazy(() => import('pages/dashboard/Table')));
 const Branch = Loadable(lazy(() => import('pages/branch/index')));
+const Warehouse = Loadable(lazy(() => import('pages/warehouse/index')));
 
 const AppRoutes = (isLoggedIn = false) => [
     {
@@ -54,6 +54,10 @@ const AppRoutes = (isLoggedIn = false) => [
                 element: <Branch />
             },
             {
+                path: 'warehouse',
+                element: <Warehouse />
+            },
+            {
                 path: 'color',
                 element: <Color />
             },
@@ -85,10 +89,6 @@ const AppRoutes = (isLoggedIn = false) => [
             {
                 path: '*',
                 element: <Navigate to="/" replace />
-            },
-            {
-                path: 'table',
-                element: <Table />
             }
         ]
     }

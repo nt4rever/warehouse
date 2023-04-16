@@ -1,11 +1,16 @@
 import axiosClient from 'utils/axiosClient';
 
 const END_POINT = {
-    ALL: '/branch'
+    ALL: '/branch',
+    UPDATE: '/branch'
 };
 
 const getAll = () => {
     return axiosClient.get(END_POINT.ALL);
 };
 
-export const branchServices = { getAll };
+const update = ({ id, payload }) => {
+    return axiosClient.patch(`${END_POINT.ALL}/${id}`, payload);
+};
+
+export const branchServices = { getAll, update };

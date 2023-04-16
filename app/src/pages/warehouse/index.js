@@ -12,25 +12,25 @@ import {
     TablePagination,
     TableRow
 } from '@mui/material/';
-import { dispatch } from 'store/index';
-import { snackbarActions } from 'store/reducers/snackbar';
 import { useQuery } from '@tanstack/react-query';
-import { branchServices } from 'api/branch/index';
+import { warehouseServices } from 'api/warehouse/index';
 import TablePaginationActions from './../../components/PaginationAction/index';
-import BranchModal from './edit.modal';
+import WarehouseEditModal from './edit.modal';
+import WarehouseNewModal from './new.modal';
 
-const Branch = () => {
+const Warehouse = () => {
     const { data } = useQuery({
-        queryKey: ['branch'],
-        queryFn: branchServices.getAll
+        queryKey: ['warehouse'],
+        queryFn: warehouseServices.getAll
     });
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    const [modal, setModal] = React.useState({
+    const [modalEdit, setModalEdit] = React.useState({
         open: false,
         data: {}
     });
+    const [modalNew, setModalNew] = React.useState(false);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -42,14 +42,14 @@ const Branch = () => {
     };
 
     const handleClickDetail = (row) => {
-        setModal({
+        setModalEdit({
             open: true,
             data: row
         });
     };
 
     const handleCloseModal = () => {
-        setModal({
+        setModalEdit({
             open: false,
             data: {}
         });
@@ -57,23 +57,27 @@ const Branch = () => {
 
     return (
         <React.Fragment>
-            <BranchModal open={modal.open} data={modal.data} handleClose={handleCloseModal} />
+            <WarehouseEditModal open={modalEdit.open} data={modalEdit.data} handleClose={handleCloseModal} />
+            <WarehouseNewModal open={modalNew} handleClose={() => setModalNew(false)} />
+            <Button variant="contained" color="primary" onClick={() => setModalNew(true)}>
+                Create
+            </Button>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 500 }}>
                     <TableHead>
                         <TableRow>
-                            <TableCell align="left">Branch ID</TableCell>
-                            <TableCell align="left">Branch Name</TableCell>
+                            <TableCell align="left">Warehouse ID</TableCell>
+                            <TableCell align="left">Warehouse Name</TableCell>
                             <TableCell align="left">PhoneNumber</TableCell>
-                            <TableCell align="left">Branch Address</TableCell>
+                            <TableCell align="left">Warehouse Address</TableCell>
                             <TableCell align="left">Action</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {(rowsPerPage > 0 ? data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data)?.map((row) => (
                             <TableRow key={row.name} onClick={(e) => handleClickDetail(row)}>
-                                <TableCell align="left">{row.BranchID}</TableCell>
-                                <TableCell align="left">{row.BranchName}</TableCell>
+                                <TableCell align="left">{row.WarehouseID}</TableCell>
+                                <TableCell align="left">{row.WarehouseName}</TableCell>
                                 <TableCell align="left">{row.PhoneNumber}</TableCell>
                                 <TableCell align="left">{row.Address}</TableCell>
                                 <TableCell align="left">
@@ -111,4 +115,4 @@ const Branch = () => {
     );
 };
 
-export default Branch;
+export default Warehouse;
