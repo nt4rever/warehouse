@@ -106,7 +106,7 @@ const AuthLogin = () => {
                                         id="-password-login"
                                         type={showPassword ? 'text' : 'password'}
                                         value={values.Password}
-                                        name="password"
+                                        name="Password"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         endAdornment={
