@@ -39,10 +39,11 @@ const BranchModal = (props) => {
         mutationFn: branchServices.update,
         onSuccess: (response) => {
             dispatch(snackbarActions.open({ message: response.message, severity: 'success' }));
-            queryClient.invalidateQueries({ queryKey: ['branch'] });
+            queryClient.invalidateQueries({ queryKey: ['branches'] });
         },
         onError: (error) => {
-            dispatch(snackbarActions.open({ message: error.message, severity: 'error' }));
+            const message = error.response.data.message;
+            dispatch(snackbarActions.open({ message: message, severity: 'error' }));
         }
     });
 

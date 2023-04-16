@@ -57,8 +57,8 @@ const User = () => {
 
     return (
         <React.Fragment>
-            <UserEditModal open={modalEdit.open} data={modalEdit.data} handleClose={handleCloseModal} />
-            <UserNewModal open={modalNew} handleClose={() => setModalNew(false)} />
+            <UserEditModal open={modalEdit.open} data={modalEdit.data} onClose={handleCloseModal} />
+            <UserNewModal open={modalNew} onClose={() => setModalNew(false)} />
             <Button variant="contained" color="primary" onClick={() => setModalNew(true)}>
                 Create
             </Button>
@@ -68,21 +68,23 @@ const User = () => {
                         <TableRow>
                             <TableCell align="left">User ID</TableCell>
                             <TableCell align="left">User Name</TableCell>
-                            <TableCell align="left">PhoneNumber</TableCell>
-                            <TableCell align="left">User Address</TableCell>
+                            <TableCell align="left">Firs tName</TableCell>
+                            <TableCell align="left">Last Name</TableCell>
+                            <TableCell align="left">Role</TableCell>
                             <TableCell align="left">Action</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {(rowsPerPage > 0 ? data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data)?.map((row) => (
-                            <TableRow key={row.name} onClick={(e) => handleClickDetail(row)}>
+                            <TableRow key={row.name}>
                                 <TableCell align="left">{row.UserID}</TableCell>
                                 <TableCell align="left">{row.UserName}</TableCell>
-                                <TableCell align="left">{row.PhoneNumber}</TableCell>
-                                <TableCell align="left">{row.Address}</TableCell>
+                                <TableCell align="left">{row.FirstName}</TableCell>
+                                <TableCell align="left">{row.LastName}</TableCell>
+                                <TableCell align="left">{row.RoleName}</TableCell>
                                 <TableCell align="left">
                                     <Stack direction="row" spacing={2}>
-                                        <Button variant="contained" color="primary">
+                                        <Button variant="contained" color="primary" onClick={(e) => handleClickDetail(row)}>
                                             Edit
                                         </Button>
                                     </Stack>

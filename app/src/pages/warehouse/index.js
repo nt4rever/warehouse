@@ -20,7 +20,7 @@ import WarehouseNewModal from './new.modal';
 
 const Warehouse = () => {
     const { data } = useQuery({
-        queryKey: ['warehouse'],
+        queryKey: ['warehouses'],
         queryFn: warehouseServices.getAll
     });
 
@@ -57,8 +57,8 @@ const Warehouse = () => {
 
     return (
         <React.Fragment>
-            <WarehouseEditModal open={modalEdit.open} data={modalEdit.data} handleClose={handleCloseModal} />
-            <WarehouseNewModal open={modalNew} handleClose={() => setModalNew(false)} />
+            <WarehouseEditModal open={modalEdit.open} data={modalEdit.data} onClose={handleCloseModal} />
+            <WarehouseNewModal open={modalNew} onClose={() => setModalNew(false)} />
             <Button variant="contained" color="primary" onClick={() => setModalNew(true)}>
                 Create
             </Button>
@@ -75,14 +75,14 @@ const Warehouse = () => {
                     </TableHead>
                     <TableBody>
                         {(rowsPerPage > 0 ? data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data)?.map((row) => (
-                            <TableRow key={row.name} onClick={(e) => handleClickDetail(row)}>
+                            <TableRow key={row.name}>
                                 <TableCell align="left">{row.WarehouseID}</TableCell>
                                 <TableCell align="left">{row.WarehouseName}</TableCell>
                                 <TableCell align="left">{row.PhoneNumber}</TableCell>
                                 <TableCell align="left">{row.Address}</TableCell>
                                 <TableCell align="left">
                                     <Stack direction="row" spacing={2}>
-                                        <Button variant="contained" color="primary">
+                                        <Button variant="contained" color="primary" onClick={(e) => handleClickDetail(row)}>
                                             Edit
                                         </Button>
                                     </Stack>

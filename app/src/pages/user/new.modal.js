@@ -1,25 +1,22 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, MenuItem, Slide, TextField, Typography } from '@mui/material';
-import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { snackbarActions } from 'store/reducers/snackbar';
-import { warehouseServices } from 'api/warehouse/index';
-import { branchServices } from 'api/branch/index';
+import { userServices } from 'api/user/index';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const WarehouseNewModal = (props) => {
+const UserNewModal = (props) => {
     const { open, onClose } = props;
-    const [modalData, setModalData] = React.useState({});
+    const [modalData, setModalData] = React.useState({
+        RoleID: 'EMPLOYEE'
+    });
     const queryClient = useQueryClient();
     const dispatch = useDispatch();
-    const { data: branches } = useQuery({
-        queryKey: ['branches'],
-        queryFn: branchServices.getAll
-    });
     const handleChange = (event) => {
         const { name, value } = event.target;
         setModalData((prev) => ({
@@ -29,10 +26,10 @@ const WarehouseNewModal = (props) => {
     };
 
     const mutation = useMutation({
-        mutationFn: warehouseServices.create,
+        mutationFn: userServices.create,
         onSuccess: (response) => {
             dispatch(snackbarActions.open({ message: response.message, severity: 'success' }));
-            queryClient.invalidateQueries({ queryKey: ['warehouses'] });
+            queryClient.invalidateQueries({ queryKey: ['users'] });
         },
         onError: (error) => {
             const message = error.response.data.message;
@@ -43,78 +40,91 @@ const WarehouseNewModal = (props) => {
     const handleSubmit = () => {
         mutation.mutate(modalData);
         handleClose();
-        setModalData({});
     };
 
     const handleClose = () => {
         onClose();
-        setModalData({});
+        setModalData({
+            RoleID: 'EMPLOYEE'
+        });
     };
 
     return (
         <Dialog fullWidth={true} maxWidth={'xs'} open={open} onClose={handleClose} TransitionComponent={Transition} keepMounted>
-            <DialogTitle>Create New Warehouse</DialogTitle>
+            <DialogTitle>Create New User</DialogTitle>
             <DialogContent>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <Typography variant="subtitle1">Warehouse ID</Typography>
+                        <Typography variant="subtitle1">User ID</Typography>
                         <TextField
                             fullWidth
-                            name="WarehouseID"
+                            name="UserID"
                             onChange={handleChange}
                             required
-                            value={modalData.WarehouseID || ''}
+                            value={modalData.UserID || ''}
                             variant="outlined"
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="subtitle1">Warehouse Name</Typography>
+                        <Typography variant="subtitle1">User Name</Typography>
                         <TextField
                             fullWidth
-                            name="WarehouseName"
+                            name="UserName"
                             onChange={handleChange}
                             required
-                            value={modalData.WarehouseName || ''}
+                            value={modalData.UserName || ''}
                             variant="outlined"
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="subtitle1">Branch</Typography>
+                        <Typography variant="subtitle1">First Name</Typography>
+                        <TextField
+                            fullWidth
+                            name="FirstName"
+                            onChange={handleChange}
+                            required
+                            value={modalData.FirstName || ''}
+                            variant="outlined"
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="subtitle1">Last Name</Typography>
+                        <TextField
+                            fullWidth
+                            name="LastName"
+                            onChange={handleChange}
+                            required
+                            value={modalData.LastName || ''}
+                            variant="outlined"
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="subtitle1">Role</Typography>
                         <TextField
                             fullWidth
                             select
-                            name="BranchID"
+                            name="RoleID"
                             onChange={handleChange}
                             required
-                            value={modalData.BranchID || ''}
+                            value={modalData.RoleID}
                             variant="outlined"
                         >
-                            {branches?.map((branch) => (
-                                <MenuItem key={branch.BranchID} value={branch.BranchID}>
-                                    {branch.BranchName}
+                            {roles?.map((role) => (
+                                <MenuItem key={role.RoleID} value={role.RoleID}>
+                                    {role.RoleName}
                                 </MenuItem>
                             ))}
                         </TextField>
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="subtitle1">Phone Number</Typography>
+                        <Typography variant="subtitle1">Password</Typography>
                         <TextField
                             fullWidth
-                            name="PhoneNumber"
+                            type="password"
+                            name="Password"
                             onChange={handleChange}
                             required
-                            value={modalData.PhoneNumber || ''}
-                            variant="outlined"
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Typography variant="subtitle1">Address</Typography>
-                        <TextField
-                            fullWidth
-                            name="Address"
-                            onChange={handleChange}
-                            required
-                            value={modalData.Address || ''}
+                            value={modalData.Password || ''}
                             variant="outlined"
                         />
                     </Grid>
@@ -132,9 +142,20 @@ const WarehouseNewModal = (props) => {
     );
 };
 
-export default WarehouseNewModal;
+export default UserNewModal;
 
-WarehouseNewModal.propTypes = {
+const roles = [
+    {
+        RoleID: 'ADMIN',
+        RoleName: 'Quản trị viên'
+    },
+    {
+        RoleID: 'EMPLOYEE',
+        RoleName: 'Nhân viên'
+    }
+];
+
+UserNewModal.propTypes = {
     open: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired
+    handleClose: PropTypes.func.isRequired
 };

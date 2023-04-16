@@ -21,7 +21,7 @@ import BranchModal from './edit.modal';
 
 const Branch = () => {
     const { data } = useQuery({
-        queryKey: ['branch'],
+        queryKey: ['branches'],
         queryFn: branchServices.getAll
     });
 
@@ -71,14 +71,14 @@ const Branch = () => {
                     </TableHead>
                     <TableBody>
                         {(rowsPerPage > 0 ? data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data)?.map((row) => (
-                            <TableRow key={row.name} onClick={(e) => handleClickDetail(row)}>
+                            <TableRow key={row.name}>
                                 <TableCell align="left">{row.BranchID}</TableCell>
                                 <TableCell align="left">{row.BranchName}</TableCell>
                                 <TableCell align="left">{row.PhoneNumber}</TableCell>
                                 <TableCell align="left">{row.Address}</TableCell>
                                 <TableCell align="left">
                                     <Stack direction="row" spacing={2}>
-                                        <Button variant="contained" color="primary">
+                                        <Button variant="contained" color="primary" onClick={(e) => handleClickDetail(row)}>
                                             Edit
                                         </Button>
                                     </Stack>

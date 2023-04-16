@@ -15,18 +15,18 @@ const humanResource = {
     type: 'group',
     children: [
         {
-            id: 'employee',
-            title: 'Employee',
-            type: 'item',
-            url: '/employee',
-            icon: icons.UserOutlined
-        },
-        {
             id: 'user',
             title: 'User',
             type: 'item',
             url: '/user',
             icon: icons.UserAddOutlined
+        },
+        {
+            id: 'employee',
+            title: 'Employee',
+            type: 'item',
+            url: '/employee',
+            icon: icons.UserOutlined
         }
     ]
 };

@@ -4,22 +4,30 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, MenuIt
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { snackbarActions } from 'store/reducers/snackbar';
-import { warehouseServices } from 'api/warehouse/index';
+import { employeeServices } from 'api/employee/index';
+import { userServices } from 'api/user/index';
 import { branchServices } from 'api/branch/index';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const WarehouseNewModal = (props) => {
+const EmployeeNewModal = (props) => {
     const { open, onClose } = props;
     const [modalData, setModalData] = React.useState({});
     const queryClient = useQueryClient();
     const dispatch = useDispatch();
+
     const { data: branches } = useQuery({
         queryKey: ['branches'],
         queryFn: branchServices.getAll
     });
+
+    const { data: users } = useQuery({
+        queryKey: ['users'],
+        queryFn: userServices.getAll
+    });
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setModalData((prev) => ({
@@ -29,10 +37,10 @@ const WarehouseNewModal = (props) => {
     };
 
     const mutation = useMutation({
-        mutationFn: warehouseServices.create,
+        mutationFn: employeeServices.create,
         onSuccess: (response) => {
             dispatch(snackbarActions.open({ message: response.message, severity: 'success' }));
-            queryClient.invalidateQueries({ queryKey: ['warehouses'] });
+            queryClient.invalidateQueries({ queryKey: ['employees'] });
         },
         onError: (error) => {
             const message = error.response.data.message;
@@ -43,7 +51,6 @@ const WarehouseNewModal = (props) => {
     const handleSubmit = () => {
         mutation.mutate(modalData);
         handleClose();
-        setModalData({});
     };
 
     const handleClose = () => {
@@ -53,70 +60,55 @@ const WarehouseNewModal = (props) => {
 
     return (
         <Dialog fullWidth={true} maxWidth={'xs'} open={open} onClose={handleClose} TransitionComponent={Transition} keepMounted>
-            <DialogTitle>Create New Warehouse</DialogTitle>
+            <DialogTitle>Create New Employee</DialogTitle>
             <DialogContent>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <Typography variant="subtitle1">Warehouse ID</Typography>
+                        <Typography variant="subtitle1">Employee ID</Typography>
                         <TextField
                             fullWidth
-                            name="WarehouseID"
+                            name="EmployeeID"
                             onChange={handleChange}
                             required
-                            value={modalData.WarehouseID || ''}
+                            value={modalData.EmployeeID || ''}
                             variant="outlined"
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="subtitle1">Warehouse Name</Typography>
+                        <Typography variant="subtitle1">Branch ID</Typography>
                         <TextField
                             fullWidth
-                            name="WarehouseName"
-                            onChange={handleChange}
-                            required
-                            value={modalData.WarehouseName || ''}
-                            variant="outlined"
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Typography variant="subtitle1">Branch</Typography>
-                        <TextField
-                            fullWidth
-                            select
                             name="BranchID"
                             onChange={handleChange}
                             required
                             value={modalData.BranchID || ''}
                             variant="outlined"
+                            select
                         >
                             {branches?.map((branch) => (
                                 <MenuItem key={branch.BranchID} value={branch.BranchID}>
-                                    {branch.BranchName}
+                                    {branch.BranchID}
                                 </MenuItem>
                             ))}
                         </TextField>
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="subtitle1">Phone Number</Typography>
+                        <Typography variant="subtitle1">User ID</Typography>
                         <TextField
                             fullWidth
-                            name="PhoneNumber"
+                            name="UserID"
                             onChange={handleChange}
                             required
-                            value={modalData.PhoneNumber || ''}
+                            value={modalData.UserID || ''}
                             variant="outlined"
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Typography variant="subtitle1">Address</Typography>
-                        <TextField
-                            fullWidth
-                            name="Address"
-                            onChange={handleChange}
-                            required
-                            value={modalData.Address || ''}
-                            variant="outlined"
-                        />
+                            select
+                        >
+                            {users?.map((user) => (
+                                <MenuItem key={user.UserID} value={user.UserID}>
+                                    {user.UserName}
+                                </MenuItem>
+                            ))}
+                        </TextField>
                     </Grid>
                 </Grid>
             </DialogContent>
@@ -132,9 +124,9 @@ const WarehouseNewModal = (props) => {
     );
 };
 
-export default WarehouseNewModal;
+export default EmployeeNewModal;
 
-WarehouseNewModal.propTypes = {
+EmployeeNewModal.propTypes = {
     open: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired
+    handleClose: PropTypes.func.isRequired
 };

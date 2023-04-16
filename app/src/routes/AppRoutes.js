@@ -21,6 +21,8 @@ const Shadow = Loadable(lazy(() => import('pages/components-overview/Shadow')));
 const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons')));
 const Branch = Loadable(lazy(() => import('pages/branch/index')));
 const Warehouse = Loadable(lazy(() => import('pages/warehouse/index')));
+const User = Loadable(lazy(() => import('pages/user/index')));
+const Employee = Loadable(lazy(() => import('pages/employee/index')));
 
 const AppRoutes = (isLoggedIn = false) => [
     {
@@ -56,6 +58,14 @@ const AppRoutes = (isLoggedIn = false) => [
             {
                 path: 'warehouse',
                 element: <Warehouse />
+            },
+            {
+                path: 'user',
+                element: <User />
+            },
+            {
+                path: 'employee',
+                element: <Employee />
             },
             {
                 path: 'color',
