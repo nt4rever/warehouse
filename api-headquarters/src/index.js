@@ -20,6 +20,6 @@ app.use(routes);
 
 app.use((req, res) => res.status(404).json({ message: MESSAGES.NOT_FOUND }));
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`Server app listening at http://localhost:${port}`);
 });
