@@ -25,6 +25,10 @@ const snackbar = createSlice({
             state.transition = transition ? transition : initialState.transition;
             state.autoHideDuration = autoHideDuration ? autoHideDuration : initialState.autoHideDuration;
             return state;
+        },
+        close(state) {
+            state.open = false;
+            return state;
         }
     }
 });

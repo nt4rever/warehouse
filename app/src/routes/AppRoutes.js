@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom';
 import Loadable from 'components/Loadable';
 import MinimalLayout from 'layout/MinimalLayout';
 import MainLayout from 'layout/MainLayout';
+import { ROLES } from 'utils/constant';
 
 // render - login
 const AuthLogin = Loadable(lazy(() => import('pages/authentication/Login')));
@@ -29,7 +30,7 @@ const Material = Loadable(lazy(() => import('pages/material')));
 const Customer = Loadable(lazy(() => import('pages/customer')));
 const Supplier = Loadable(lazy(() => import('pages/supplier')));
 
-const AppRoutes = (isLoggedIn = false) => [
+const AppRoutes = (isLoggedIn = false, currentUser) => [
     {
         path: '/auth/*',
         element: !isLoggedIn ? <MinimalLayout /> : <Navigate to="/" replace />,
@@ -38,10 +39,6 @@ const AppRoutes = (isLoggedIn = false) => [
                 path: 'login',
                 element: <AuthLogin />
             },
-            // {
-            //     path: 'register',
-            //     element: <AuthRegister />
-            // },
             {
                 path: '*',
                 element: <Navigate to="/auth/login" replace />
@@ -49,8 +46,34 @@ const AppRoutes = (isLoggedIn = false) => [
         ]
     },
     {
+        path: '/headquarters/*',
+        element: redirectRoutes(isLoggedIn, currentUser, ROLES.ADMIN),
+        children: [
+            {
+                path: 'branch',
+                element: <Branch />
+            },
+            {
+                path: 'warehouse',
+                element: <Warehouse />
+            },
+            {
+                path: 'user',
+                element: <User />
+            },
+            {
+                path: 'employee',
+                element: <Employee />
+            },
+            {
+                path: '*',
+                element: <DashboardDefault />
+            }
+        ]
+    },
+    {
         path: '/',
-        element: isLoggedIn ? <MainLayout /> : <Navigate to={'/auth/login'} replace />,
+        element: redirectRoutes(isLoggedIn, currentUser, ROLES.EMPLOYEE),
         children: [
             {
                 path: '/',
@@ -128,5 +151,11 @@ const AppRoutes = (isLoggedIn = false) => [
         ]
     }
 ];
+
+const redirectRoutes = (isLoggedIn = false, currentUser, type = ROLES.EMPLOYEE) => {
+    if (!isLoggedIn) return <Navigate to={'/auth/login'} replace />;
+    if (currentUser?.RoleID !== type) return <Navigate to={type === ROLES.ADMIN ? '/' : '/headquarters'} replace />;
+    return <MainLayout />;
+};
 
 export default AppRoutes;

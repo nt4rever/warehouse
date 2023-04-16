@@ -15,6 +15,7 @@ import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { authActions } from 'store/reducers/auth';
 import { dispatch } from 'store';
 import { authServices } from 'api/auth';
+import { snackbarActions } from 'store/reducers/snackbar';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -42,6 +43,8 @@ const AuthLogin = () => {
                 })
             );
         } catch (error) {
+            const message = error.response.data.message;
+            dispatch(snackbarActions.open({ message, severity: 'error' }));
             dispatch(authActions.loginFailed());
         }
     };

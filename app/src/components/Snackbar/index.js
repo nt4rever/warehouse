@@ -1,6 +1,8 @@
 import React from 'react';
 import { Snackbar as MuiSnackbar, Alert as MuiAlert, Slide, Grow, Fade } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { dispatch } from 'store/index';
+import { snackbarActions } from 'store/reducers/snackbar';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -37,24 +39,18 @@ const transition = {
 
 const Snackbar = () => {
     const initSnackbar = useSelector((state) => state.snackbar);
-    const [open, setOpen] = React.useState(false);
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-
-        setOpen(false);
+        dispatch(snackbarActions.close());
     };
-
-    React.useEffect(() => {
-        setOpen(initSnackbar.open);
-    }, [initSnackbar.message, initSnackbar.open]);
 
     return (
         <MuiSnackbar
             anchorOrigin={initSnackbar.anchorOrigin}
-            open={open}
+            open={initSnackbar.open}
             autoHideDuration={initSnackbar.autoHideDuration}
             onClose={handleClose}
             TransitionComponent={transition[initSnackbar.transition]}

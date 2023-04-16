@@ -1,4 +1,4 @@
 export const CATEGORY_QUERY = {
   ALL: `SELECT * FROM Category`,
-  CREATE: `INSERT INTO Category VALUES(@CategoryID, @CategoryName);`,
+  CREATE: `INSERT INTO Category (CategoryID, CategoryName) VALUES(@CategoryID, @CategoryName);`,
 };

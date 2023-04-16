@@ -12,7 +12,7 @@ import { activeItem } from 'store/reducers/menu';
 
 // ==============================|| NAVIGATION - LIST ITEM ||============================== //
 
-const NavItem = ({ item, level }) => {
+const NavItem = ({ item, level, addPath }) => {
     const theme = useTheme();
     const dispatch = useDispatch();
     const menu = useSelector((state) => state.menu);
@@ -23,7 +23,9 @@ const NavItem = ({ item, level }) => {
         itemTarget = '_blank';
     }
 
-    let listItemProps = { component: forwardRef((props, ref) => <Link ref={ref} {...props} to={item.url} target={itemTarget} />) };
+    let listItemProps = {
+        component: forwardRef((props, ref) => <Link ref={ref} {...props} to={`${addPath}${item.url}`} target={itemTarget} />)
+    };
     if (item?.external) {
         listItemProps = { component: 'a', href: item.url, target: itemTarget };
     }
