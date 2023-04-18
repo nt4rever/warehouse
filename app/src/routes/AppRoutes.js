@@ -66,6 +66,18 @@ const AppRoutes = (isLoggedIn = false, currentUser) => [
                 element: <Employee />
             },
             {
+                path: 'category',
+                element: <Category />
+            },
+            {
+                path: 'unit',
+                element: <Unit />
+            },
+            {
+                path: 'material',
+                element: <Material />
+            },
+            {
                 path: '*',
                 element: <DashboardDefault />
             }

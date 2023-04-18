@@ -87,17 +87,7 @@ const MaterialNewModal = (props) => {
                             variant="outlined"
                         />
                     </Grid>
-                    <Grid item xs={12}>
-                        <Typography variant="subtitle1">Material Code</Typography>
-                        <TextField
-                            fullWidth
-                            name="MaterialCode"
-                            onChange={handleChange}
-                            required
-                            value={modalData.MaterialCode || ''}
-                            variant="outlined"
-                        />
-                    </Grid>
+
                     <Grid item xs={12}>
                         <Typography variant="subtitle1">Material Name</Typography>
                         <TextField
@@ -141,7 +131,7 @@ const MaterialNewModal = (props) => {
                         >
                             <MenuItem value="">Select Unit</MenuItem>
                             {units?.map((unit) => (
-                                <MenuItem key={unit.UnitID} value={unit.CategoryID}>
+                                <MenuItem key={unit.UnitID} value={unit.UnitID}>
                                     {unit.UnitName}
                                 </MenuItem>
                             ))}
@@ -163,12 +153,21 @@ const MaterialNewModal = (props) => {
                         />
                     </Grid>
                     <Grid item xs={12}>
+                        <Typography variant="subtitle1">Image URL</Typography>
+                        <TextField
+                            fullWidth
+                            name="Image_URL"
+                            onChange={handleChange}
+                            value={modalData.Image_URL || ''}
+                            variant="outlined"
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
                         <Typography variant="subtitle1">Description</Typography>
                         <TextField
                             fullWidth
                             name="Description"
                             onChange={handleChange}
-                            required
                             value={modalData.Description || ''}
                             variant="outlined"
                             multiline

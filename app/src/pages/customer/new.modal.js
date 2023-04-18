@@ -36,10 +36,7 @@ const CustomerEditModal = (props) => {
     });
 
     const handleSubmit = () => {
-        mutation.mutate({
-            id: modalData.CustomerID,
-            payload: modalData
-        });
+        mutation.mutate(modalData);
         handleClose();
     };
 

@@ -17,8 +17,11 @@ import { materialServices } from 'api/material/index';
 import TablePaginationActions from './../../components/PaginationAction/index';
 import MaterialEditModal from './edit.modal';
 import MaterialNewModal from './new.modal';
+import { useSelector } from 'react-redux';
+import { ROLES } from 'utils/constant';
 
 const Material = () => {
+    const { currentUser } = useSelector((state) => state.auth);
     const { data } = useQuery({
         queryKey: ['materials'],
         queryFn: materialServices.getAll
@@ -59,15 +62,16 @@ const Material = () => {
         <React.Fragment>
             <MaterialEditModal open={modalEdit.open} data={modalEdit.data} onClose={handleCloseModal} />
             <MaterialNewModal open={modalNew} onClose={() => setModalNew(false)} />
-            <Button variant="contained" color="primary" onClick={() => setModalNew(true)}>
-                Create
-            </Button>
+            {currentUser?.RoleID === ROLES.EMPLOYEE && (
+                <Button variant="contained" color="primary" onClick={() => setModalNew(true)}>
+                    Create
+                </Button>
+            )}
             <TableContainer sx={{ marginTop: 2 }} component={Paper}>
                 <Table sx={{ minWidth: 500 }}>
                     <TableHead>
                         <TableRow>
-                            <TableCell align="left">Material Code</TableCell>
-                            <TableCell align="left">Material Name</TableCell>
+                            <TableCell align="left">Material ID</TableCell>
                             <TableCell align="left">Category Name</TableCell>
                             <TableCell align="left">Unit Name</TableCell>
                             <TableCell align="left">Price</TableCell>
@@ -77,7 +81,7 @@ const Material = () => {
                     <TableBody>
                         {(rowsPerPage > 0 ? data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data)?.map((row, index) => (
                             <TableRow key={index}>
-                                <TableCell align="left">{row.MaterialCode}</TableCell>
+                                <TableCell align="left">{row.MaterialID}</TableCell>
                                 <TableCell align="left">{row.MaterialName}</TableCell>
                                 <TableCell align="left">{row.CategoryName}</TableCell>
                                 <TableCell align="left">{row.UnitName}</TableCell>

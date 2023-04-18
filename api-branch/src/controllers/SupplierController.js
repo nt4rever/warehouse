@@ -10,7 +10,7 @@ const all = async (req, res) => {
     return res.status(200).json(rows);
   } catch (error) {
     return res.status(400).json({
-      message: MESSAGES.ERROR
+      message: MESSAGES.ERROR,
     });
   }
 };
@@ -18,9 +18,9 @@ const all = async (req, res) => {
 const create = async (req, res) => {
   try {
     let { SupplierID, SupplierName, Address, PhoneNumber } = req.body;
-    if (!SupplierID || !SupplierName || !Address || !PhoneNumber)
+    if (!SupplierID || !SupplierName)
       return res.status(400).json({
-        message: SUPPLIER_MESSAGES.MISSING_FIELDS
+        message: SUPPLIER_MESSAGES.MISSING_FIELDS,
       });
     const pool = await poolPromise;
     await pool
@@ -34,7 +34,7 @@ const create = async (req, res) => {
     return res.status(201).json({ message: SUPPLIER_MESSAGES.CREATED });
   } catch (error) {
     return res.status(400).json({
-      message: MESSAGES.ERROR
+      message: MESSAGES.ERROR,
     });
   }
 };
@@ -44,10 +44,13 @@ const update = async (req, res) => {
     const SupplierID = req.params.id;
     let { SupplierName, Address, PhoneNumber } = req.body;
     const pool = await poolPromise;
-    const { recordset: rows } = await pool.request().input("SupplierID", SupplierID).query(SUPPLIER_QUERY.BY_ID);
+    const { recordset: rows } = await pool
+      .request()
+      .input("SupplierID", SupplierID)
+      .query(SUPPLIER_QUERY.BY_ID);
     if (rows.length === 0)
       return res.status(404).json({
-        message: SUPPLIER_MESSAGES.NOT_FOUND
+        message: SUPPLIER_MESSAGES.NOT_FOUND,
       });
 
     const SUPPLIER = rows[0];
@@ -63,12 +66,12 @@ const update = async (req, res) => {
       .query(SUPPLIER_QUERY.UPDATE);
 
     return res.status(200).json({
-      message: SUPPLIER_MESSAGES.UPDATED
+      message: SUPPLIER_MESSAGES.UPDATED,
     });
   } catch (error) {
     console.log(error);
     return res.status(400).json({
-      message: MESSAGES.ERROR
+      message: MESSAGES.ERROR,
     });
   }
 };

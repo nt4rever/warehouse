@@ -11,7 +11,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const SupplierEditModal = (props) => {
-    const { open, data, onClose } = props;
+    const { open, onClose } = props;
     const [modalData, setModalData] = React.useState({});
     const queryClient = useQueryClient();
     const dispatch = useDispatch();
@@ -36,10 +36,7 @@ const SupplierEditModal = (props) => {
     });
 
     const handleSubmit = () => {
-        mutation.mutate({
-            id: modalData.SupplierID,
-            payload: modalData
-        });
+        mutation.mutate(modalData);
         handleClose();
     };
 

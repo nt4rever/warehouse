@@ -4,6 +4,8 @@ import userRoutes from "./user";
 import branchRoutes from "./branch";
 import warehouseRoutes from "./warehouse";
 import employeeRoutes from "./employee";
+import categoryRoutes from "./category";
+import unitRoutes from "./unit";
 import auth from "../../middleware/auth";
 import { role } from "../../middleware/role";
 import { ROLES } from "../../utils/constant";
@@ -19,5 +21,9 @@ router.use("/branch", auth, role.check(ROLES.ADMIN), branchRoutes);
 router.use("/warehouse", auth, role.check(ROLES.ADMIN), warehouseRoutes);
 // employee routes
 router.use("/employee", auth, role.check(ROLES.ADMIN), employeeRoutes);
+// category routes
+router.use("/category", auth, role.check(ROLES.ADMIN), categoryRoutes);
+// unit routes
+router.use("/unit", auth, role.check(ROLES.ADMIN), unitRoutes);
 
 export default router;

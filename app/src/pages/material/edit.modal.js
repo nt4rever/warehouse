@@ -81,17 +81,6 @@ const MaterialEditModal = (props) => {
                         <TextField fullWidth name="MaterialID" disabled required value={modalData.MaterialID || ''} variant="outlined" />
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="subtitle1">Material Code</Typography>
-                        <TextField
-                            fullWidth
-                            name="MaterialCode"
-                            onChange={handleChange}
-                            required
-                            value={modalData.MaterialCode || ''}
-                            variant="outlined"
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
                         <Typography variant="subtitle1">Material Name</Typography>
                         <TextField
                             fullWidth

@@ -1,6 +1,6 @@
 import poolPromise from "../configs/connectDB";
 import { BRANCH_QUERY } from "../queries/branchQuery";
-import { MESSAGES } from "../utils/messages";
+import { BRANCH_MESSAGES, MESSAGES } from "../utils/messages";
 
 const getAll = async (req, res) => {
   try {

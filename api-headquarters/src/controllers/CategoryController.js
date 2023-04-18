@@ -15,27 +15,6 @@ const all = async (req, res) => {
   }
 };
 
-const create = async (req, res) => {
-  try {
-    let { CategoryID, CategoryName } = req.body;
-    if (!CategoryID || !CategoryName)
-      return res.status(400).json({
-        message: CATEGORY_MESSAGES.MISSING_FIELDS,
-      });
-    const pool = await poolPromise;
-    await pool
-      .request()
-      .input("CategoryID", CategoryID)
-      .input("CategoryName", CategoryName)
-      .query(CATEGORY_QUERY.CREATE);
-    return res.status(201).json({ message: CATEGORY_MESSAGES.CREATED });
-  } catch (error) {
-    return res.status(400).json({
-      message: MESSAGES.ERROR,
-    });
-  }
-};
-
 const update = async (req, res) => {
   try {
     let CategoryID = req.params.id;
@@ -58,4 +37,4 @@ const update = async (req, res) => {
   }
 };
 
-export default { create, all, update };
+export default { all, update };
