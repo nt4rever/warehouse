@@ -15,8 +15,11 @@ import { useQuery } from '@tanstack/react-query';
 import TablePaginationActions from './../../components/PaginationAction/index';
 import EmployeeNewModal from './new.modal';
 import { employeeServices } from 'api/employee/index';
+import { useSelector } from 'react-redux';
+import { ROLES } from 'utils/constant';
 
 const Employee = () => {
+    const { currentUser } = useSelector((state) => state.auth);
     const { data } = useQuery({
         queryKey: ['employees'],
         queryFn: employeeServices.getAll
@@ -39,9 +42,11 @@ const Employee = () => {
     return (
         <React.Fragment>
             <EmployeeNewModal open={modalNew} onClose={() => setModalNew(false)} />
-            <Button variant="contained" color="primary" onClick={() => setModalNew(true)}>
-                Create
-            </Button>
+            {currentUser?.RoleID === ROLES.ADMIN && (
+                <Button variant="contained" color="primary" onClick={() => setModalNew(true)}>
+                    Create
+                </Button>
+            )}
             <TableContainer sx={{ marginTop: 2 }} component={Paper}>
                 <Table sx={{ minWidth: 500 }}>
                     <TableHead>

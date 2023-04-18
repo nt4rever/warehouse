@@ -17,8 +17,11 @@ import { unitServices } from 'api/unit/index';
 import TablePaginationActions from '../../components/PaginationAction/index';
 import UnitEditModal from './edit.modal';
 import UnitNewModal from './new.modal';
+import { useSelector } from 'react-redux';
+import { ROLES } from 'utils/constant';
 
 const Unit = () => {
+    const { currentUser } = useSelector((state) => state.auth);
     const { data } = useQuery({
         queryKey: ['units'],
         queryFn: unitServices.getAll
@@ -59,9 +62,11 @@ const Unit = () => {
         <React.Fragment>
             <UnitEditModal open={modalEdit.open} data={modalEdit.data} onClose={handleCloseModal} />
             <UnitNewModal open={modalNew} onClose={() => setModalNew(false)} />
-            <Button variant="contained" color="primary" onClick={() => setModalNew(true)}>
-                Create
-            </Button>
+            {currentUser?.RoleID === ROLES.EMPLOYEE && (
+                <Button variant="contained" color="primary" onClick={() => setModalNew(true)}>
+                    Create
+                </Button>
+            )}
             <TableContainer sx={{ marginTop: 2 }} component={Paper}>
                 <Table sx={{ minWidth: 500 }}>
                     <TableHead>

@@ -17,8 +17,11 @@ import { userServices } from 'api/user/index';
 import TablePaginationActions from './../../components/PaginationAction/index';
 import UserEditModal from './edit.modal';
 import UserNewModal from './new.modal';
+import { useSelector } from 'react-redux';
+import { ROLES } from 'utils/constant';
 
 const User = () => {
+    const { currentUser } = useSelector((state) => state.auth);
     const { data } = useQuery({
         queryKey: ['users'],
         queryFn: userServices.getAll
@@ -59,9 +62,12 @@ const User = () => {
         <React.Fragment>
             <UserEditModal open={modalEdit.open} data={modalEdit.data} onClose={handleCloseModal} />
             <UserNewModal open={modalNew} onClose={() => setModalNew(false)} />
-            <Button variant="contained" color="primary" onClick={() => setModalNew(true)}>
-                Create
-            </Button>
+            {currentUser?.RoleID === ROLES.ADMIN && (
+                <Button variant="contained" color="primary" onClick={() => setModalNew(true)}>
+                    Create
+                </Button>
+            )}
+
             <TableContainer sx={{ marginTop: 2 }} component={Paper}>
                 <Table sx={{ minWidth: 500 }}>
                     <TableHead>
