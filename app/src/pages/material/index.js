@@ -71,8 +71,7 @@ const Material = () => {
                 <Table sx={{ minWidth: 500 }}>
                     <TableHead>
                         <TableRow>
-                            <TableCell align="left">Material Code</TableCell>
-                            <TableCell align="left">Material Name</TableCell>
+                            <TableCell align="left">Material ID</TableCell>
                             <TableCell align="left">Category Name</TableCell>
                             <TableCell align="left">Unit Name</TableCell>
                             <TableCell align="left">Price</TableCell>
@@ -82,7 +81,7 @@ const Material = () => {
                     <TableBody>
                         {(rowsPerPage > 0 ? data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data)?.map((row, index) => (
                             <TableRow key={index}>
-                                <TableCell align="left">{row.MaterialCode}</TableCell>
+                                <TableCell align="left">{row.MaterialID}</TableCell>
                                 <TableCell align="left">{row.MaterialName}</TableCell>
                                 <TableCell align="left">{row.CategoryName}</TableCell>
                                 <TableCell align="left">{row.UnitName}</TableCell>
