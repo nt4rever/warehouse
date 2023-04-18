@@ -1,12 +1,12 @@
 USE [master]
 GO
-/****** Object:  Database [QLVT_TQT]    Script Date: 4/2/2023 4:40:23 PM ******/
+/****** Object:  Database [QLVT_TQT]    Script Date: 4/18/2023 4:32:20 PM ******/
 CREATE DATABASE [QLVT_TQT]
  CONTAINMENT = NONE
  ON  PRIMARY 
-( NAME = N'QLVT_TQT', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SERVER01\MSSQL\DATA\QLVT_TQT.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+( NAME = N'QLVT_TQT', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SERVER01\MSSQL\DATA\QLVT_TQT.mdf' , SIZE = 73728KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
  LOG ON 
-( NAME = N'QLVT_TQT_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SERVER01\MSSQL\DATA\QLVT_TQT_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+( NAME = N'QLVT_TQT_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SERVER01\MSSQL\DATA\QLVT_TQT_log.ldf' , SIZE = 139264KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
  WITH CATALOG_COLLATION = DATABASE_DEFAULT
 GO
 ALTER DATABASE [QLVT_TQT] SET COMPATIBILITY_LEVEL = 150
@@ -82,7 +82,28 @@ ALTER DATABASE [QLVT_TQT] SET QUERY_STORE = OFF
 GO
 USE [QLVT_TQT]
 GO
-/****** Object:  Table [dbo].[Branch]    Script Date: 4/2/2023 4:40:25 PM ******/
+/****** Object:  DatabaseRole [MSmerge_PAL_role]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE ROLE [MSmerge_PAL_role]
+GO
+/****** Object:  DatabaseRole [MSmerge_BEFDDAE640EE43E08A3CACBC5F5DBCF7]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE ROLE [MSmerge_BEFDDAE640EE43E08A3CACBC5F5DBCF7]
+GO
+/****** Object:  DatabaseRole [MSmerge_7DD065DEC10546A88472131B99B78657]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE ROLE [MSmerge_7DD065DEC10546A88472131B99B78657]
+GO
+/****** Object:  DatabaseRole [MSmerge_4699A149704840558BEA84690422E026]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE ROLE [MSmerge_4699A149704840558BEA84690422E026]
+GO
+ALTER ROLE [MSmerge_PAL_role] ADD MEMBER [MSmerge_BEFDDAE640EE43E08A3CACBC5F5DBCF7]
+GO
+ALTER ROLE [MSmerge_PAL_role] ADD MEMBER [MSmerge_7DD065DEC10546A88472131B99B78657]
+GO
+ALTER ROLE [MSmerge_PAL_role] ADD MEMBER [MSmerge_4699A149704840558BEA84690422E026]
+GO
+/****** Object:  Schema [MSmerge_PAL_role]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE SCHEMA [MSmerge_PAL_role]
+GO
+/****** Object:  Table [dbo].[Branch]    Script Date: 4/18/2023 4:32:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -92,6 +113,7 @@ CREATE TABLE [dbo].[Branch](
 	[BranchName] [nvarchar](100) NOT NULL,
 	[Address] [nvarchar](255) NOT NULL,
 	[PhoneNumber] [nvarchar](15) NULL,
+	[rowguid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
  CONSTRAINT [PK_Branch] PRIMARY KEY CLUSTERED 
 (
 	[BranchID] ASC
@@ -102,7 +124,7 @@ CREATE TABLE [dbo].[Branch](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Category]    Script Date: 4/2/2023 4:40:25 PM ******/
+/****** Object:  Table [dbo].[Category]    Script Date: 4/18/2023 4:32:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -110,6 +132,7 @@ GO
 CREATE TABLE [dbo].[Category](
 	[CategoryID] [nvarchar](10) NOT NULL,
 	[CategoryName] [nvarchar](100) NOT NULL,
+	[rowguid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
  CONSTRAINT [PK_Category] PRIMARY KEY CLUSTERED 
 (
 	[CategoryID] ASC
@@ -120,7 +143,7 @@ CREATE TABLE [dbo].[Category](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Customer]    Script Date: 4/2/2023 4:40:25 PM ******/
+/****** Object:  Table [dbo].[Customer]    Script Date: 4/18/2023 4:32:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -130,6 +153,7 @@ CREATE TABLE [dbo].[Customer](
 	[CustomerName] [nvarchar](255) NOT NULL,
 	[Address] [nvarchar](255) NULL,
 	[PhoneNumber] [nvarchar](15) NULL,
+	[rowguid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
  CONSTRAINT [PK_Customer] PRIMARY KEY CLUSTERED 
 (
 	[CustomerID] ASC
@@ -140,7 +164,7 @@ CREATE TABLE [dbo].[Customer](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Employee]    Script Date: 4/2/2023 4:40:25 PM ******/
+/****** Object:  Table [dbo].[Employee]    Script Date: 4/18/2023 4:32:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -149,6 +173,7 @@ CREATE TABLE [dbo].[Employee](
 	[EmployeeID] [nvarchar](10) NOT NULL,
 	[BranchID] [nvarchar](10) NOT NULL,
 	[UserID] [nvarchar](10) NOT NULL,
+	[rowguid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
  CONSTRAINT [PK_Employee] PRIMARY KEY CLUSTERED 
 (
 	[EmployeeID] ASC
@@ -159,7 +184,7 @@ CREATE TABLE [dbo].[Employee](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Inventory]    Script Date: 4/2/2023 4:40:25 PM ******/
+/****** Object:  Table [dbo].[Inventory]    Script Date: 4/18/2023 4:32:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -169,13 +194,14 @@ CREATE TABLE [dbo].[Inventory](
 	[WarehouseID] [nvarchar](10) NOT NULL,
 	[MaterialID] [nvarchar](10) NOT NULL,
 	[Quantity] [int] NOT NULL,
+	[rowguid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
  CONSTRAINT [PK_Inventory] PRIMARY KEY CLUSTERED 
 (
 	[InventoryID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Material]    Script Date: 4/2/2023 4:40:25 PM ******/
+/****** Object:  Table [dbo].[Material]    Script Date: 4/18/2023 4:32:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -183,19 +209,19 @@ GO
 CREATE TABLE [dbo].[Material](
 	[MaterialID] [nvarchar](10) NOT NULL,
 	[MaterialName] [nvarchar](100) NOT NULL,
-	[MaterialCode] [nvarchar](100) NOT NULL,
 	[Image_URL] [nvarchar](255) NULL,
 	[Description] [nvarchar](255) NULL,
 	[CategoryID] [nvarchar](10) NOT NULL,
 	[UnitID] [nvarchar](10) NOT NULL,
 	[Price] [money] NOT NULL,
+	[rowguid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
  CONSTRAINT [PK_Material] PRIMARY KEY CLUSTERED 
 (
 	[MaterialID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Order]    Script Date: 4/2/2023 4:40:25 PM ******/
+/****** Object:  Table [dbo].[Order]    Script Date: 4/18/2023 4:32:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -207,13 +233,14 @@ CREATE TABLE [dbo].[Order](
 	[EmployeeID] [nvarchar](10) NOT NULL,
 	[OrderDate] [date] NOT NULL,
 	[TotalPrice] [decimal](18, 0) NOT NULL,
+	[rowguid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
  CONSTRAINT [PK_Order] PRIMARY KEY CLUSTERED 
 (
 	[OrderID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[OrderDetail]    Script Date: 4/2/2023 4:40:25 PM ******/
+/****** Object:  Table [dbo].[OrderDetail]    Script Date: 4/18/2023 4:32:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -223,6 +250,7 @@ CREATE TABLE [dbo].[OrderDetail](
 	[MaterialID] [nvarchar](10) NOT NULL,
 	[Quantity] [int] NOT NULL,
 	[Price] [decimal](18, 0) NOT NULL,
+	[rowguid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
  CONSTRAINT [PK_OrderDetail] PRIMARY KEY CLUSTERED 
 (
 	[OrderID] ASC,
@@ -230,7 +258,7 @@ CREATE TABLE [dbo].[OrderDetail](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Role]    Script Date: 4/2/2023 4:40:25 PM ******/
+/****** Object:  Table [dbo].[Role]    Script Date: 4/18/2023 4:32:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -238,13 +266,14 @@ GO
 CREATE TABLE [dbo].[Role](
 	[RoleID] [nvarchar](10) NOT NULL,
 	[RoleName] [nvarchar](100) NOT NULL,
+	[rowguid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
  CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED 
 (
 	[RoleID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Supplier]    Script Date: 4/2/2023 4:40:25 PM ******/
+/****** Object:  Table [dbo].[Supplier]    Script Date: 4/18/2023 4:32:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -254,6 +283,7 @@ CREATE TABLE [dbo].[Supplier](
 	[SupplierName] [nvarchar](255) NOT NULL,
 	[Address] [nvarchar](255) NULL,
 	[PhoneNumber] [nvarchar](15) NULL,
+	[rowguid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
  CONSTRAINT [PK_Supplier] PRIMARY KEY CLUSTERED 
 (
 	[SupplierID] ASC
@@ -264,7 +294,7 @@ CREATE TABLE [dbo].[Supplier](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Unit]    Script Date: 4/2/2023 4:40:25 PM ******/
+/****** Object:  Table [dbo].[Unit]    Script Date: 4/18/2023 4:32:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -272,6 +302,7 @@ GO
 CREATE TABLE [dbo].[Unit](
 	[UnitID] [nvarchar](10) NOT NULL,
 	[UnitName] [nvarchar](100) NOT NULL,
+	[rowguid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
  CONSTRAINT [PK_Unit] PRIMARY KEY CLUSTERED 
 (
 	[UnitID] ASC
@@ -282,7 +313,7 @@ CREATE TABLE [dbo].[Unit](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 4/2/2023 4:40:25 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 4/18/2023 4:32:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -298,6 +329,7 @@ CREATE TABLE [dbo].[User](
 	[Address] [nvarchar](255) NULL,
 	[PhoneNumber] [nvarchar](50) NULL,
 	[Birthday] [date] NULL,
+	[rowguid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
  CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
 (
 	[UserID] ASC
@@ -308,7 +340,7 @@ UNIQUE NONCLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserRole]    Script Date: 4/2/2023 4:40:25 PM ******/
+/****** Object:  Table [dbo].[UserRole]    Script Date: 4/18/2023 4:32:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -316,6 +348,7 @@ GO
 CREATE TABLE [dbo].[UserRole](
 	[UserID] [nvarchar](10) NOT NULL,
 	[RoleID] [nvarchar](10) NOT NULL,
+	[rowguid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
  CONSTRAINT [PK_UserRole] PRIMARY KEY CLUSTERED 
 (
 	[UserID] ASC,
@@ -323,7 +356,7 @@ CREATE TABLE [dbo].[UserRole](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Warehouse]    Script Date: 4/2/2023 4:40:25 PM ******/
+/****** Object:  Table [dbo].[Warehouse]    Script Date: 4/18/2023 4:32:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -334,13 +367,14 @@ CREATE TABLE [dbo].[Warehouse](
 	[BranchID] [nvarchar](10) NOT NULL,
 	[Address] [nvarchar](255) NOT NULL,
 	[PhoneNumber] [nvarchar](15) NULL,
+	[rowguid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
  CONSTRAINT [PK_Warehouse] PRIMARY KEY CLUSTERED 
 (
 	[WarehouseID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WareHouseExport]    Script Date: 4/2/2023 4:40:25 PM ******/
+/****** Object:  Table [dbo].[WareHouseExport]    Script Date: 4/18/2023 4:32:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -351,13 +385,14 @@ CREATE TABLE [dbo].[WareHouseExport](
 	[EmployeeID] [nvarchar](10) NOT NULL,
 	[ExportDate] [date] NOT NULL,
 	[TotalPrice] [decimal](18, 0) NOT NULL,
+	[rowguid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
  CONSTRAINT [PK_WareHouseExport] PRIMARY KEY CLUSTERED 
 (
 	[ExportID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WareHouseExportDetail]    Script Date: 4/2/2023 4:40:25 PM ******/
+/****** Object:  Table [dbo].[WareHouseExportDetail]    Script Date: 4/18/2023 4:32:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -367,6 +402,7 @@ CREATE TABLE [dbo].[WareHouseExportDetail](
 	[MaterialID] [nvarchar](10) NOT NULL,
 	[Quantity] [int] NOT NULL,
 	[Price] [decimal](18, 0) NOT NULL,
+	[rowguid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
  CONSTRAINT [PK_WareHouseExportDetail] PRIMARY KEY CLUSTERED 
 (
 	[ExportID] ASC,
@@ -374,7 +410,7 @@ CREATE TABLE [dbo].[WareHouseExportDetail](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WareHouseImport]    Script Date: 4/2/2023 4:40:25 PM ******/
+/****** Object:  Table [dbo].[WareHouseImport]    Script Date: 4/18/2023 4:32:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -385,13 +421,14 @@ CREATE TABLE [dbo].[WareHouseImport](
 	[SupplierID] [nvarchar](10) NOT NULL,
 	[ImportDate] [date] NOT NULL,
 	[TotalPrice] [decimal](18, 0) NOT NULL,
+	[rowguid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
  CONSTRAINT [PK_WareHouseImport] PRIMARY KEY CLUSTERED 
 (
 	[ImportID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WareHouseImportDetail]    Script Date: 4/2/2023 4:40:25 PM ******/
+/****** Object:  Table [dbo].[WareHouseImportDetail]    Script Date: 4/18/2023 4:32:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -401,6 +438,7 @@ CREATE TABLE [dbo].[WareHouseImportDetail](
 	[MaterialID] [nvarchar](10) NOT NULL,
 	[Quantity] [int] NOT NULL,
 	[Price] [decimal](18, 0) NOT NULL,
+	[rowguid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
  CONSTRAINT [PK_WareHouseImportDetail] PRIMARY KEY CLUSTERED 
 (
 	[ImportID] ASC,
@@ -408,13 +446,161 @@ CREATE TABLE [dbo].[WareHouseImportDetail](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+/****** Object:  Index [MSmerge_index_581577110]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [MSmerge_index_581577110] ON [dbo].[Branch]
+(
+	[rowguid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [MSmerge_index_629577281]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [MSmerge_index_629577281] ON [dbo].[Category]
+(
+	[rowguid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [MSmerge_index_677577452]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [MSmerge_index_677577452] ON [dbo].[Customer]
+(
+	[rowguid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [MSmerge_index_725577623]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [MSmerge_index_725577623] ON [dbo].[Employee]
+(
+	[rowguid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [MSmerge_index_773577794]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [MSmerge_index_773577794] ON [dbo].[Inventory]
+(
+	[rowguid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [MSmerge_index_805577908]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [MSmerge_index_805577908] ON [dbo].[Material]
+(
+	[rowguid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [MSmerge_index_837578022]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [MSmerge_index_837578022] ON [dbo].[Order]
+(
+	[rowguid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [MSmerge_index_869578136]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [MSmerge_index_869578136] ON [dbo].[OrderDetail]
+(
+	[rowguid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [MSmerge_index_901578250]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [MSmerge_index_901578250] ON [dbo].[Role]
+(
+	[rowguid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [MSmerge_index_933578364]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [MSmerge_index_933578364] ON [dbo].[Supplier]
+(
+	[rowguid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [MSmerge_index_981578535]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [MSmerge_index_981578535] ON [dbo].[Unit]
+(
+	[rowguid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [MSmerge_index_1029578706]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [MSmerge_index_1029578706] ON [dbo].[User]
+(
+	[rowguid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [MSmerge_index_1077578877]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [MSmerge_index_1077578877] ON [dbo].[UserRole]
+(
+	[rowguid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [MSmerge_index_1109578991]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [MSmerge_index_1109578991] ON [dbo].[Warehouse]
+(
+	[rowguid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [MSmerge_index_1141579105]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [MSmerge_index_1141579105] ON [dbo].[WareHouseExport]
+(
+	[rowguid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [MSmerge_index_1173579219]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [MSmerge_index_1173579219] ON [dbo].[WareHouseExportDetail]
+(
+	[rowguid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [MSmerge_index_1205579333]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [MSmerge_index_1205579333] ON [dbo].[WareHouseImport]
+(
+	[rowguid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [MSmerge_index_1237579447]    Script Date: 4/18/2023 4:32:21 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [MSmerge_index_1237579447] ON [dbo].[WareHouseImportDetail]
+(
+	[rowguid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Branch] ADD  CONSTRAINT [MSmerge_df_rowguid_193B7B6F9CF54FA2849AC2618F0A9350]  DEFAULT (newsequentialid()) FOR [rowguid]
+GO
+ALTER TABLE [dbo].[Category] ADD  CONSTRAINT [MSmerge_df_rowguid_DA06A1A63E6946F4AD298E2998C81AEB]  DEFAULT (newsequentialid()) FOR [rowguid]
+GO
+ALTER TABLE [dbo].[Customer] ADD  CONSTRAINT [MSmerge_df_rowguid_B0A98169F7A448E0B716657ECCE117E5]  DEFAULT (newsequentialid()) FOR [rowguid]
+GO
+ALTER TABLE [dbo].[Employee] ADD  CONSTRAINT [MSmerge_df_rowguid_FAEC00067F4C4EC28FDCAE650912F363]  DEFAULT (newsequentialid()) FOR [rowguid]
+GO
+ALTER TABLE [dbo].[Inventory] ADD  CONSTRAINT [MSmerge_df_rowguid_D93A686F937B4F25A428DA663CA32C26]  DEFAULT (newsequentialid()) FOR [rowguid]
+GO
+ALTER TABLE [dbo].[Material] ADD  CONSTRAINT [MSmerge_df_rowguid_2D92B8BA3A514863BD3F85363225B906]  DEFAULT (newsequentialid()) FOR [rowguid]
+GO
+ALTER TABLE [dbo].[Order] ADD  CONSTRAINT [MSmerge_df_rowguid_135E5E1227164F6E8E345B00CDD8629B]  DEFAULT (newsequentialid()) FOR [rowguid]
+GO
+ALTER TABLE [dbo].[OrderDetail] ADD  CONSTRAINT [MSmerge_df_rowguid_7C60719F038A48C6B28BA2082F207AE0]  DEFAULT (newsequentialid()) FOR [rowguid]
+GO
+ALTER TABLE [dbo].[Role] ADD  CONSTRAINT [MSmerge_df_rowguid_AB792FC90CAA4FE999AF6DAFE6DE676C]  DEFAULT (newsequentialid()) FOR [rowguid]
+GO
+ALTER TABLE [dbo].[Supplier] ADD  CONSTRAINT [MSmerge_df_rowguid_780870F54BAF4E61A73E1560977C811C]  DEFAULT (newsequentialid()) FOR [rowguid]
+GO
+ALTER TABLE [dbo].[Unit] ADD  CONSTRAINT [MSmerge_df_rowguid_67A2B24764EC4AF8A6AB990A734C7CD7]  DEFAULT (newsequentialid()) FOR [rowguid]
+GO
+ALTER TABLE [dbo].[User] ADD  CONSTRAINT [MSmerge_df_rowguid_464569A51A884D5AAA8763761F76B68E]  DEFAULT (newsequentialid()) FOR [rowguid]
+GO
+ALTER TABLE [dbo].[UserRole] ADD  CONSTRAINT [MSmerge_df_rowguid_7BA626461AF84D8786EFB2E2DDF95060]  DEFAULT (newsequentialid()) FOR [rowguid]
+GO
+ALTER TABLE [dbo].[Warehouse] ADD  CONSTRAINT [MSmerge_df_rowguid_CF0CF441744F4648A9AD01316377CA4E]  DEFAULT (newsequentialid()) FOR [rowguid]
+GO
+ALTER TABLE [dbo].[WareHouseExport] ADD  CONSTRAINT [MSmerge_df_rowguid_DE78DB3969724738B318DF63F3504290]  DEFAULT (newsequentialid()) FOR [rowguid]
+GO
+ALTER TABLE [dbo].[WareHouseExportDetail] ADD  CONSTRAINT [MSmerge_df_rowguid_761B4DADFF2B48C39049FEA4231E0C26]  DEFAULT (newsequentialid()) FOR [rowguid]
+GO
+ALTER TABLE [dbo].[WareHouseImport] ADD  CONSTRAINT [MSmerge_df_rowguid_8E9694093F604A249F56B25AF42EE295]  DEFAULT (newsequentialid()) FOR [rowguid]
+GO
+ALTER TABLE [dbo].[WareHouseImportDetail] ADD  CONSTRAINT [MSmerge_df_rowguid_AC5DB7F47D2145E6BB93DA0CB5E7DB7B]  DEFAULT (newsequentialid()) FOR [rowguid]
+GO
 ALTER TABLE [dbo].[Employee]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Branch] FOREIGN KEY([BranchID])
 REFERENCES [dbo].[Branch] ([BranchID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Employee] CHECK CONSTRAINT [FK_Employee_Branch]
 GO
 ALTER TABLE [dbo].[Employee]  WITH CHECK ADD  CONSTRAINT [FK_employee_user] FOREIGN KEY([UserID])
 REFERENCES [dbo].[User] ([UserID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Employee] CHECK CONSTRAINT [FK_employee_user]
 GO
@@ -465,6 +651,8 @@ ALTER TABLE [dbo].[OrderDetail] CHECK CONSTRAINT [FK_OrderDetail_Order]
 GO
 ALTER TABLE [dbo].[UserRole]  WITH CHECK ADD  CONSTRAINT [FK_UserRole_Role] FOREIGN KEY([RoleID])
 REFERENCES [dbo].[Role] ([RoleID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[UserRole] CHECK CONSTRAINT [FK_UserRole_Role]
 GO
@@ -477,6 +665,8 @@ ALTER TABLE [dbo].[UserRole] CHECK CONSTRAINT [FK_UserRole_User]
 GO
 ALTER TABLE [dbo].[Warehouse]  WITH CHECK ADD  CONSTRAINT [FK_Warehouse_Branch] FOREIGN KEY([BranchID])
 REFERENCES [dbo].[Branch] ([BranchID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Warehouse] CHECK CONSTRAINT [FK_Warehouse_Branch]
 GO
