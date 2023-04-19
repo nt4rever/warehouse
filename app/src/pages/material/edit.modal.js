@@ -19,13 +19,14 @@ import { snackbarActions } from 'store/reducers/snackbar';
 import { materialServices } from 'api/material/index';
 import { categoryServices } from 'api/category/index';
 import { unitServices } from 'api/unit/index';
+import { useEffect } from 'react';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const MaterialEditModal = (props) => {
-    const { open, onClose } = props;
+    const { open, onClose, data } = props;
     const [modalData, setModalData] = React.useState({});
     const queryClient = useQueryClient();
     const dispatch = useDispatch();
@@ -61,7 +62,10 @@ const MaterialEditModal = (props) => {
     });
 
     const handleSubmit = () => {
-        mutation.mutate(modalData);
+        mutation.mutate({
+            id: modalData.MaterialID,
+            payload: { ...modalData }
+        });
         handleClose();
         setModalData({});
     };
@@ -70,6 +74,10 @@ const MaterialEditModal = (props) => {
         onClose();
         setModalData({});
     };
+
+    useEffect(() => {
+        setModalData(data);
+    }, [data]);
 
     return (
         <Dialog fullWidth={true} maxWidth={'sm'} open={open} onClose={handleClose} TransitionComponent={Transition} keepMounted>
@@ -99,7 +107,6 @@ const MaterialEditModal = (props) => {
                             onChange={handleChange}
                             required
                             select
-                            SelectProps={{ native: true }}
                             value={modalData.CategoryID || ''}
                             variant="outlined"
                         >
@@ -119,13 +126,12 @@ const MaterialEditModal = (props) => {
                             onChange={handleChange}
                             required
                             select
-                            SelectProps={{ native: true }}
                             value={modalData.UnitID || ''}
                             variant="outlined"
                         >
                             <MenuItem value="">Select Unit</MenuItem>
                             {units?.map((unit) => (
-                                <MenuItem key={unit.UnitID} value={unit.CategoryID}>
+                                <MenuItem key={unit.UnitID} value={unit.UnitID}>
                                     {unit.UnitName}
                                 </MenuItem>
                             ))}

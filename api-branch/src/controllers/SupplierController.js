@@ -55,8 +55,8 @@ const update = async (req, res) => {
 
     const SUPPLIER = rows[0];
     SupplierName = SupplierName ? SupplierName : SUPPLIER.SupplierName;
-    Address = Address ? Address : SUPPLIER.Address;
-    PhoneNumber = PhoneNumber ? PhoneNumber : SUPPLIER.PhoneNumber;
+    Address = Address ?? SUPPLIER.Address;
+    PhoneNumber = PhoneNumber ?? SUPPLIER.PhoneNumber;
     await pool
       .request()
       .input("SupplierID", SupplierID)

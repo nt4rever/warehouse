@@ -6,3 +6,4 @@ export * from "./warehouse.message";
 export * from "./employee.message";
 export * from "./unit.message";
 export * from "./category.message";
+export * from "./material.message";

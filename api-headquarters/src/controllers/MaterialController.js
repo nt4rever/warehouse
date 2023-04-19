@@ -15,40 +15,6 @@ const all = async (req, res) => {
   }
 };
 
-const create = async (req, res) => {
-  try {
-    let {
-      MaterialID,
-      MaterialName,
-      Description,
-      CategoryID,
-      UnitID,
-      Price,
-      Image_URL,
-    } = req.body;
-    if (!MaterialID || !MaterialName || !CategoryID || !UnitID || !Price)
-      return res.status(400).json({
-        message: MATERIAL_MESSAGES.MISSING_FIELDS,
-      });
-    const pool = await poolPromise;
-    await pool
-      .request()
-      .input("MaterialID", MaterialID)
-      .input("MaterialName", MaterialName)
-      .input("Description", Description)
-      .input("CategoryID", CategoryID)
-      .input("UnitID", UnitID)
-      .input("Price", Price)
-      .input("Image_URL", Image_URL)
-      .query(MATERIAL_QUERY.CREATE);
-    return res.status(201).json({ message: MATERIAL_MESSAGES.CREATED });
-  } catch (error) {
-    return res.status(400).json({
-      message: MESSAGES.ERROR,
-    });
-  }
-};
-
 const update = async (req, res) => {
   try {
     const MaterialID = req.params.id;
@@ -87,10 +53,11 @@ const update = async (req, res) => {
       message: MATERIAL_MESSAGES.UPDATED,
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       message: MESSAGES.ERROR,
     });
   }
 };
 
-export default { create, all, update };
+export default { all, update };
