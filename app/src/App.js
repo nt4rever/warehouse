@@ -5,6 +5,7 @@ import Routes from 'routes';
 import ThemeCustomization from 'themes';
 import ScrollTop from 'components/ScrollTop';
 import Snackbar from 'components/Snackbar/index';
+import Loading from 'components/Loading';
 
 // ==============================|| APP - THEME, ROUTER, LOCAL  ||============================== //
 
@@ -15,6 +16,7 @@ const App = () => (
         <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
         <ThemeCustomization>
             <ScrollTop>
+                <Loading />
                 <Routes />
                 <Snackbar />
             </ScrollTop>

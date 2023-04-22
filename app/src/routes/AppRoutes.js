@@ -29,6 +29,7 @@ const Unit = Loadable(lazy(() => import('pages/unit')));
 const Material = Loadable(lazy(() => import('pages/material')));
 const Customer = Loadable(lazy(() => import('pages/customer')));
 const Supplier = Loadable(lazy(() => import('pages/supplier')));
+const Inventory = Loadable(lazy(() => import('pages/warehousing/inventory')));
 
 const AppRoutes = (isLoggedIn = false, currentUser) => [
     {
@@ -130,6 +131,15 @@ const AppRoutes = (isLoggedIn = false, currentUser) => [
             {
                 path: 'color',
                 element: <Color />
+            },
+            {
+                path: 'warehousing',
+                children: [
+                    {
+                        path: 'inventory',
+                        element: <Inventory />
+                    }
+                ]
             },
             {
                 path: 'dashboard',
