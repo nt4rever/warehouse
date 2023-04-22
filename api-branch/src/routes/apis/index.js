@@ -9,6 +9,7 @@ import unitRoutes from "./unit";
 import materialRoutes from "./material";
 import customerRoutes from "./customer";
 import supplierRoutes from "./supplier";
+import inventoryRoutes from "./inventory";
 import auth from "../../middleware/auth";
 import { role } from "../../middleware/role";
 import { ROLES } from "../../utils/constant";
@@ -34,5 +35,7 @@ router.use("/material", auth, role.check(ROLES.EMPLOYEE), materialRoutes);
 router.use("/customer", auth, role.check(ROLES.EMPLOYEE), customerRoutes);
 // supplier
 router.use("/supplier", auth, role.check(ROLES.EMPLOYEE), supplierRoutes);
+// inventory
+router.use("/inventory", auth, role.check(ROLES.EMPLOYEE), inventoryRoutes);
 
 export default router;
