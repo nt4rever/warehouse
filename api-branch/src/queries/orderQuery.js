@@ -26,4 +26,5 @@ export const ORDER_QUERY = {
   SET Quantity=@Quantity, Price=@Price
   WHERE OrderID=@OrderID AND MaterialID=@MaterialID`,
   DELETE: `DELETE FROM [dbo].[Order] WHERE OrderID=@OrderID`,
+  DELETE_DETAIL: `DELETE FROM OrderDetail WHERE OrderID=@OrderID AND MaterialID=@MaterialID`,
 };

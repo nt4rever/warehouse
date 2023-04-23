@@ -17,25 +17,25 @@ const create = async (req, res) => {
     let {
       OrderID,
       CustomerID,
-      EmployeeID,
       WarehouseID,
       OrderDate,
       TotalPrice,
       OrderDetails,
     } = req.body;
-    if (
-      !OrderID ||
-      !CustomerID ||
-      !EmployeeID ||
-      !WarehouseID ||
-      !Array.isArray(OrderDetails)
-    )
+    if (!OrderID || !CustomerID || !WarehouseID || !Array.isArray(OrderDetails))
       return res.status(400).json({
         message: MESSAGES.MISSING_FIELDS,
       });
     OrderDate = OrderDate || new Date().toISOString();
     TotalPrice = Number(TotalPrice) || 0;
     const pool = await poolPromise;
+
+    // get EmployeeID
+    const { UserID } = req.user;
+    const { recordsets: rows } = await pool
+      .request()
+      .query(`SELECT * FROM Employee WHERE UserID='${UserID}'`);
+    const EmployeeID = rows[0][0].EmployeeID;
     await pool
       .request()
       .input("OrderID", OrderID)
@@ -97,8 +97,8 @@ const detail = async (req, res) => {
 
 const updateOrder = async (req, res) => {
   try {
-    let { OrderID, MaterialID, Quantity, Price } = req.body;
-    if (!OrderID || !MaterialID || !Quantity || !Price)
+    let { OrderID, MaterialID, Quantity, Price, Type } = req.body;
+    if (!OrderID || !MaterialID || !Quantity || !Price || !Type)
       return res.status(400).json({
         message: MESSAGES.MISSING_FIELDS,
       });
@@ -109,7 +109,11 @@ const updateOrder = async (req, res) => {
       .input("MaterialID", MaterialID)
       .input("Quantity", Quantity)
       .input("Price", Price)
-      .query(ORDER_QUERY.UPDATE_ORDER_DETAIL);
+      .query(
+        Type === "UPDATED"
+          ? ORDER_QUERY.UPDATE_ORDER_DETAIL
+          : ORDER_QUERY.CREATE_ORDER_DETAIL
+      );
 
     // get order details
     const { recordsets: rows } = await pool
@@ -152,4 +156,44 @@ const destroy = async (req, res) => {
   }
 };
 
-export default { all, create, detail, updateOrder, destroy };
+const destroyDetail = async (req, res) => {
+  try {
+    let { OrderID, MaterialID } = req.body;
+    if (!OrderID || !MaterialID)
+      return res.status(400).json({
+        message: MESSAGES.MISSING_FIELDS,
+      });
+    const pool = await poolPromise;
+    await pool
+      .request()
+      .input("OrderID", OrderID)
+      .input("MaterialID", MaterialID)
+      .query(ORDER_QUERY.DELETE_DETAIL);
+
+    // get order details
+    const { recordsets: rows } = await pool
+      .request()
+      .input("OrderID", OrderID)
+      .query(ORDER_QUERY.DETAIL);
+    const orders = rows[0];
+    // calculate and update new total price
+    const totalPrice = orders.reduce(
+      (acc, value) => acc + value.Price * value.Quantity,
+      0
+    );
+    await pool
+      .request()
+      .input("OrderID", OrderID)
+      .input("TotalPrice", totalPrice)
+      .query(ORDER_QUERY.UPDATE_ORDER);
+    return res.status(200).json({
+      message: MESSAGES.DELETED,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: MESSAGES.ERROR,
+    });
+  }
+};
+
+export default { all, create, detail, updateOrder, destroy, destroyDetail };
