@@ -11,7 +11,7 @@ export const USER_QUERY = {
   CREATE: `INSERT INTO [QLVT_TQT].[dbo].[User]
   (UserID, UserName, Password, FirstName, LastName, Gender, Email, Address, PhoneNumber, Birthday)
   VALUES (@UserID, @UserName, @Password, @FirstName, @LastName, @Gender, @Email, @Address, @PhoneNumber, @Birthday);`,
-  ATTACH_ROLE: `INSERT INTO UserRole values(@UserID, @RoleID)`,
+  ATTACH_ROLE: `INSERT INTO UserRole (UserID, RoleID) values(@UserID, @RoleID)`,
   DELETE: `DELETE FROM [QLVT_TQT].[dbo].[User] WHERE UserID = @Id OR UserName = @Id`,
   UPDATE: `UPDATE [QLVT_TQT].[dbo].[User]
   SET Password = @Password, FirstName = @FirstName, LastName = @LastName, Gender = @Gender, Email = @Email, Address = @Address, PhoneNumber = @PhoneNumber, Birthday = @Birthday

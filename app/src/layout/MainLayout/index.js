@@ -14,10 +14,14 @@ import Breadcrumbs from 'components/@extended/Breadcrumbs';
 
 // types
 import { openDrawer } from 'store/reducers/menu';
+import { ROLES } from 'utils/constant';
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
 const MainLayout = () => {
+    const { currentUser } = useSelector((state) => state.auth);
+    const tabTitle = currentUser?.RoleID === ROLES.ADMIN ? 'Headquarters' : 'Branch';
+    document.title = `Warehouse - ${tabTitle}`;
     const theme = useTheme();
     const matchDownLG = useMediaQuery(theme.breakpoints.down('xl'));
     const dispatch = useDispatch();
