@@ -36,8 +36,9 @@ const CustomerEditModal = (props) => {
     });
 
     const handleSubmit = () => {
-        mutation.mutate(modalData);
-        handleClose();
+        mutation.mutate(modalData, {
+            onSuccess: () => handleClose()
+        });
     };
 
     const handleClose = () => {

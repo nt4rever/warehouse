@@ -71,9 +71,15 @@ const CustomerOrderNewModal = (props) => {
     });
 
     const handleSubmit = () => {
-        mutation.mutate({ ...modalData, OrderDetails: orderDetails });
-        handleClose();
-        setModalData({});
+        mutation.mutate(
+            { ...modalData, OrderDetails: orderDetails },
+            {
+                onSuccess: () => {
+                    handleClose();
+                    setModalData({});
+                }
+            }
+        );
     };
 
     const handleClose = () => {
