@@ -55,7 +55,7 @@ const CustomerOrderEditModal = (props) => {
     const mutation = useMutation({
         mutationFn: customerOrderServices.update,
         onSuccess: (response) => {
-            dispatch(snackbarActions.open({ message: response.message, severity: 'success' }));
+            dispatch(snackbarActions.open({ message: 'Updated data successfully', severity: 'success' }));
             queryClient.invalidateQueries({ queryKey: ['customerOrders'] });
         },
         onError: (error) => {
@@ -65,11 +65,17 @@ const CustomerOrderEditModal = (props) => {
     });
 
     const handleSubmit = () => {
-        mutation.mutate({
-            payload: { ...modalData, OrderDetails: orderDetails }
-        });
-        handleClose();
-        setModalData({});
+        mutation.mutate(
+            {
+                payload: { ...modalData, OrderDetails: orderDetails }
+            },
+            {
+                onSuccess: () => {
+                    handleClose();
+                    setModalData({});
+                }
+            }
+        );
     };
 
     const handleClose = () => {

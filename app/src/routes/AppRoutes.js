@@ -80,6 +80,14 @@ const AppRoutes = (isLoggedIn = false, currentUser) => [
                 element: <Material />
             },
             {
+                path: 'customer',
+                element: <Customer />
+            },
+            {
+                path: 'supplier',
+                element: <Supplier />
+            },
+            {
                 path: '*',
                 element: <DashboardDefault />
             }

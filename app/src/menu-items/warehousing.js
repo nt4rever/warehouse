@@ -13,6 +13,7 @@ const warehousing = {
     id: 'warehousing',
     title: 'Warehousing',
     type: 'group',
+    employeeOnly: true,
     children: [
         {
             id: 'inventory',

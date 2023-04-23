@@ -15,7 +15,7 @@ const NavGroup = ({ item }) => {
     const addPath = currentUser?.RoleID === ROLES.ADMIN && item.id !== 'authentication' ? '/headquarters' : '';
     const menu = useSelector((state) => state.menu);
     const { drawerOpen } = menu;
-
+    if (item.employeeOnly && currentUser?.RoleID === ROLES.ADMIN) return null;
     const navCollapse = item.children?.map((menuItem) => {
         switch (menuItem.type) {
             case 'collapse':
