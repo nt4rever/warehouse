@@ -20,6 +20,13 @@ const warehousing = {
             type: 'item',
             url: '/warehousing/inventory',
             icon: icons.TagsOutlined
+        },
+        {
+            id: 'orders',
+            title: 'Orders',
+            type: 'item',
+            url: '/customer-order',
+            icon: icons.SkinOutlined
         }
     ]
 };

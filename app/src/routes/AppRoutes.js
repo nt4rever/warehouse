@@ -5,6 +5,7 @@ import Loadable from 'components/Loadable';
 import MinimalLayout from 'layout/MinimalLayout';
 import MainLayout from 'layout/MainLayout';
 import { ROLES } from 'utils/constant';
+import CustomerOrder from 'pages/customer-order/index';
 
 // render - login
 const AuthLogin = Loadable(lazy(() => import('pages/authentication/Login')));
@@ -140,6 +141,10 @@ const AppRoutes = (isLoggedIn = false, currentUser) => [
                         element: <Inventory />
                     }
                 ]
+            },
+            {
+                path: 'customer-order',
+                element: <CustomerOrder />
             },
             {
                 path: 'dashboard',
