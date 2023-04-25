@@ -133,7 +133,7 @@ const EditInventoryModal = (props) => {
                     Close
                 </Button>
                 <Button variant="contained" color="primary" onClick={handleSubmit}>
-                    Create
+                    Save Changes
                 </Button>
             </DialogActions>
         </Dialog>

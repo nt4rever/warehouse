@@ -26,7 +26,7 @@ const Employee = () => {
     });
 
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(25);
 
     const [modalNew, setModalNew] = React.useState(false);
 
@@ -72,7 +72,7 @@ const Employee = () => {
                     <TableFooter>
                         <TableRow>
                             <TablePagination
-                                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                                rowsPerPageOptions={[25, 50, 100, { label: 'All', value: -1 }]}
                                 count={data?.length || 0}
                                 rowsPerPage={rowsPerPage}
                                 page={page}

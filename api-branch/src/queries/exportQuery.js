@@ -6,7 +6,7 @@ export const EXPORT_QUERY = {
   FROM WareHouseExport
   JOIN [dbo].[Order] as Ord ON Ord.OrderID = WareHouseExport.OrderID
   JOIN Customer ON Customer.CustomerID= Ord.CustomerID
-  JOIN Employee ON Employee.EmployeeID = Ord.EmployeeID
+  JOIN Employee ON Employee.EmployeeID = WareHouseExport.EmployeeID
   JOIN Warehouse ON Warehouse.WarehouseID = Ord.WarehouseID
   JOIN [dbo].[User] as Us ON Us.UserID = Employee.UserID`,
   CREATE: `INSERT INTO WareHouseExport (ExportID,OrderID,EmployeeID,WarehouseID,ExportDate,TotalPrice)

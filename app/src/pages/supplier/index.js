@@ -25,7 +25,7 @@ const Supplier = () => {
     });
 
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(25);
     const [modalEdit, setModalEdit] = React.useState({
         open: false,
         data: {}
@@ -93,7 +93,7 @@ const Supplier = () => {
                     <TableFooter>
                         <TableRow>
                             <TablePagination
-                                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                                rowsPerPageOptions={[25, 50, 100, { label: 'All', value: -1 }]}
                                 count={data?.length || 0}
                                 rowsPerPage={rowsPerPage}
                                 page={page}
