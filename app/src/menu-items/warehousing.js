@@ -35,14 +35,14 @@ const warehousing = {
             type: 'item',
             url: '/warehouse-export',
             icon: icons.SkinOutlined
-        },
-        {
-            id: 'import',
-            title: 'Warehouse Import',
-            type: 'item',
-            url: '/warehouse-import',
-            icon: icons.SkinOutlined
         }
+        // {
+        //     id: 'import',
+        //     title: 'Warehouse Import',
+        //     type: 'item',
+        //     url: '/warehouse-import',
+        //     icon: icons.SkinOutlined
+        // }
     ]
 };
 

@@ -57,7 +57,6 @@ const WarehouseExport = () => {
 
     return (
         <React.Fragment>
-            {/* <WarehouseExportEditModal open={modalEdit.open} data={modalEdit.data} onClose={handleCloseModal} /> */}
             <WarehouseExportNewModal open={modalNew} onClose={() => setModalNew(false)} />
             <Button variant="contained" color="primary" onClick={() => setModalNew(true)}>
                 Create
@@ -67,17 +66,19 @@ const WarehouseExport = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell align="left">Export ID</TableCell>
+                            <TableCell align="left">Order ID</TableCell>
                             <TableCell align="left">Employee</TableCell>
                             <TableCell align="left">Customer Name</TableCell>
                             <TableCell align="left">Warehouse Name</TableCell>
                             <TableCell align="left">Export Date</TableCell>
                             <TableCell align="left">Total Price</TableCell>
-                            <TableCell align="left">Action</TableCell>
+                            {/* <TableCell align="left">Action</TableCell> */}
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {(rowsPerPage > 0 ? data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data)?.map((row, index) => (
                             <TableRow key={index}>
+                                <TableCell align="left">{row.ExportID}</TableCell>
                                 <TableCell align="left">{row.OrderID}</TableCell>
                                 <TableCell align="left">
                                     {row.EmployeeFirstName} {row.EmployeeLastName}
@@ -86,13 +87,13 @@ const WarehouseExport = () => {
                                 <TableCell align="left">{row.WarehouseName}</TableCell>
                                 <TableCell align="left">{formatDate(row.OrderDate)}</TableCell>
                                 <TableCell align="left">{row.TotalPrice}</TableCell>
-                                <TableCell align="left">
+                                {/* <TableCell align="left">
                                     <Stack direction="row" spacing={2}>
                                         <Button variant="contained" color="primary" onClick={(e) => handleClickDetail(row)}>
                                             Edit
                                         </Button>
                                     </Stack>
-                                </TableCell>
+                                </TableCell> */}
                             </TableRow>
                         ))}
                     </TableBody>

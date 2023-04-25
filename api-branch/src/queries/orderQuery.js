@@ -8,6 +8,7 @@ export const ORDER_QUERY = {
   JOIN Employee ON Employee.EmployeeID = Ord.EmployeeID
   JOIN Warehouse ON Warehouse.WarehouseID = Ord.WarehouseID
   JOIN [dbo].[User] as Us ON Us.UserID = Employee.UserID`,
+  GET_BY_ID: `SELECT * FROM [dbo].[Order] WHERE OrderID=@OrderID;`,
   DETAIL: `SELECT OrderDetail.OrderID,OrderDetail.MaterialID,OrderDetail.Quantity,OrderDetail.Price,
   Material.MaterialName, Unit.UnitName, Category.CategoryName
   FROM OrderDetail
