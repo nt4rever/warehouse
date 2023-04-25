@@ -16,6 +16,6 @@ export const INVENTORY_QUERY = {
   SUB: `UPDATE Inventory SET Quantity = inv.Quantity - ords.Quantity 
   FROM Inventory inv
   INNER JOIN OrderDetail ords on ords.MaterialID = inv.MaterialID
-  INNER JOIN [dbo].[Order] ord on ord.OrderID = ords.OrderID
+  INNER JOIN [dbo].[Order] ord on ord.OrderID = ords.OrderID and ord.WarehouseID = inv.WarehouseID
   WHERE ord.OrderID = @OrderID`,
 };

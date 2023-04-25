@@ -108,5 +108,9 @@ dist
 
 #output
 build
+build-head
+build-hanoi
+build-hue
+build-danang
 
 .env
