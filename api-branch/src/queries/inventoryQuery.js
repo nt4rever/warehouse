@@ -11,5 +11,11 @@ export const INVENTORY_QUERY = {
   CREATE: `INSERT INTO Inventory (InventoryID,MaterialID,Quantity,WarehouseID) VALUES (@InventoryID,@MaterialID,@Quantity,@WarehouseID);`,
   UPDATE: `UPDATE Inventory SET MaterialID=@MaterialID, Quantity=@Quantity, WarehouseID=@WarehouseID
   WHERE InventoryID=@InventoryID;`,
+  UPDATE_QUANTITY: `UPDATE Inventory SET Quantity=@Quantity WHERE MaterialID=@MaterialID;`,
   DELETE: `DELETE FROM Inventory WHERE InventoryID=@InventoryID;`,
+  SUB: `UPDATE Inventory SET Quantity = inv.Quantity - ords.Quantity 
+  FROM Inventory inv
+  INNER JOIN OrderDetail ords on ords.MaterialID = inv.MaterialID
+  INNER JOIN [dbo].[Order] ord on ord.OrderID = ords.OrderID
+  WHERE ord.OrderID = @OrderID`,
 };

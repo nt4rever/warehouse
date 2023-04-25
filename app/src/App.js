@@ -9,7 +9,13 @@ import Loading from 'components/Loading';
 
 // ==============================|| APP - THEME, ROUTER, LOCAL  ||============================== //
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false
+        }
+    }
+});
 
 const App = () => (
     <QueryClientProvider client={queryClient}>
